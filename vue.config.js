@@ -6,9 +6,13 @@ function resolve (dir) {
 
 // 项目的主要配置文件
 module.exports = {
-    // webpack 配置进行更细粒度的修改  https://cli.vuejs.org/zh/config/#chainwebpack
-    chainWebpack: (config)=>{
-        // 修改文件引入自定义路径
+    // 二级路径
+    // publicPath: 'dm',
+    // 用于设置是否为生产环境构建生成source map，一般在生产环境下为了快速定位错误信息
+    productionSourceMap: true,
+    // 链式配置webpack
+    chainWebpack: config => {
+        // 文件路径别名
         config.resolve.alias
             .set('@', resolve('./src'))
             .set('@utils', resolve('./src/utils'))
@@ -19,12 +23,19 @@ module.exports = {
             .set('@img', resolve('./src/img'))
             .set('@axios', resolve('./src/axios'))
             .set('@store', resolve('./src/store'))
+            .set('@service', resolve('./src/service'));
     },
-
     pluginOptions: {
-      'style-resources-loader': {
-        preProcessor: 'less',
-        patterns: []
-      }
+        'style-resources-loader': {
+            preProcessor: 'less',
+            patterns: []
+        }
+    },
+    devServer: {
+        open: true, // 是否自动打开浏览器页面
+        host: '0.0.0.0', // 指定使用一个host，默认是localhost
+        port: 8080, // 端口号
+        https: false, // 是否使用https提供服务
+        proxy: null // string | Object 代理设置
     }
 }

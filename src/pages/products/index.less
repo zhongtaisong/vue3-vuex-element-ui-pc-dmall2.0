@@ -1,0 +1,69 @@
+@import '~@com/index.less';
+
+.dm_products {
+    padding-bottom: 30px;
+    background: #fff;
+    .filter_title {
+        width: 100%;
+        border-bottom: 1px dashed #eee;
+        display: flex;
+        padding: 10px;
+        h1 {
+            font-size: 14px;
+            font-weight: bold;
+            color: inherit;
+        }
+        span {
+            padding-left: 20px;
+        }
+    }
+    .filter_current {
+        border-bottom: 1px dashed #eee;
+        padding: 6px 10px;
+        >div {
+            span, p {
+                cursor: pointer;
+                margin-top: 3px;
+                margin-bottom: 3px;
+            }
+            span {
+                margin-right: 8px;
+            }
+            p {
+                display: inline-block;
+                color: @font-color-default;
+                &:hover {
+                    color: @font-color-blue;
+                }
+            }
+        }
+    }
+    .filter_condition {
+        padding: 0 10px;
+        .el-row {
+            border-bottom: 1px dashed #eee;
+            padding: 6px 0;
+            .el-col-2 {
+                color: #999;
+                line-height: 1.6rem;
+            }
+            .el-col-22 {
+                span {
+                    display: inline-block;
+                    margin-right: 30px;
+                    line-height: 1.6rem;
+                    color: rgba(0, 0, 0, 0.65);
+                    &:hover {
+                        cursor: pointer;
+                        color: @font-color-blue;
+                    }
+                }
+            }
+        }
+    }
+    .all_products {}
+    .el-pagination {
+        text-align: right;
+        padding: 10px 0;
+    }
+}

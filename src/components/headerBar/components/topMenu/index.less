@@ -1,21 +1,22 @@
-.dm_topMenu {    
+.dm_headerBar_topMenu {    
     width: 100%;
     height: 48px;
     line-height: 48px;
     padding: 10px 0;
     background: #555;
-    .ant-row {
+    box-sizing: border-box;
+    .el-row {
         height: 100%;
         display: flex;
         align-items: center;
         color: #fff;
-        .ant-col-6 {
+        .el-col-6 {
             cursor: pointer;
             &:hover {
                 text-decoration: underline;
             }
         }
-        .ant-col-18 {
+        .el-col-18 {
             display: flex;
             justify-content: flex-end;
             span {

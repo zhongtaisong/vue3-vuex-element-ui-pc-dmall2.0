@@ -1,0 +1,115 @@
+.dm_productsDetails_top {
+    min-height: 434px;
+    background: #fff;
+    margin-bottom: 20px;
+    border: solid 1px #e6e6e6;
+    padding: 16px 20px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    >.el-row {
+        .el-col-8 {
+            height: 100%;
+            dl {
+                dt {
+                    cursor: pointer;
+                    text-align: center;
+                    img {
+                        width: 90%;
+                    }
+                }
+                dd {
+                    display: flex;
+                    width: 100%;
+                    >div {
+                        width: 20%;
+                        border: 1px solid #fff;
+                        cursor: pointer;
+                        background: #fff;
+                        padding: 6px;
+                        img {
+                            width: 100%;
+                        }
+                        &:hover {
+                            border-color: #e8e8e8;
+                        }
+                        &.active {
+                            border-color: #e8e8e8;
+                        }
+                    }
+                }
+            }
+        }
+        .el-col-16 {
+            height: 100%;
+            padding: 12px 20px 0;
+            .products_title {
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 4px;
+                color: rgba(0, 0, 0, 0.85);
+                line-height: 1.4;
+            }
+            >h3 {
+                line-height: 1.4rem;
+                font-weight: normal;
+            }
+            .price {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                >div {
+                    display: flex;
+                    align-items: baseline;
+                    color: #1890ff;
+                    margin-bottom: 0;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+            }
+            .Number {
+                display: flex;
+                align-items: center;
+            }
+            .Specifications {
+                .el-col-2 {
+                    padding: 10px 0;
+                }
+                .el-col-22 {
+                    .el-col-11 {
+                        border: 1px solid #dadada;
+                        cursor: pointer;
+                        margin-bottom: 10px;
+                        &:not(:nth-child(2n)) {
+                            margin-right: 20px;
+                        }
+                        div {
+                            font-size: 12px;
+                            margin-bottom: 0;
+                            padding: 10px;
+                        }
+                        &:hover {
+                            border-color: #1890ff;
+                            div {
+                                color: #1890ff;
+                            }
+                        }
+                        &.active {
+                            border-color: #1890ff;
+                            div {
+                                color: #1890ff;
+                            }
+                        }
+                    }
+                    .el-col-1 {
+                        // display: none;
+                    }
+                }
+            }
+            .handleButton {
+                padding: 28px 0;
+                .el-btn {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}

@@ -1,42 +1,53 @@
 @import '~@com/index.less';
 
-.dm_CarouselBox {
-    min-height: 440px;
-    border: solid 1px #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    .ant-carousel {
-        .slick-list {
-            .slick-slide {
-                img {
-                    width: 100%;
-                }
-            }
-        }
-        .slick-dots {
-            height: 28px;
-            display: flex !important;
-            align-items: center;
-            justify-content: flex-end;
-            text-align: right;
-            padding-right: 20px;
-            >li {
-                padding: 6px;
-                button {
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    background: #D6D6D6;
-                    opacity: 1;
+.dm_home_carouselBox {
+    &__banner, &__push {
+        border: solid 1px #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    &__push {
+        margin: 20px 0 30px;
+        border-radius: 70px;
+        overflow: hidden;
+        border: 0 none;
+        .el-row {
+            .el-col-8 {
+                width: 33%;
+                .el-card {
+                    &__body {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        >img {
+                            width: 30%;
+                            height: 100%;
+                        }
+                        >div {
+                            flex: 1;
+                            overflow: hidden;
+                            span, div {
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                            }
+                            span {
+                                font-size: 16px;
+                                font-weight: bold;
+                                color: @main-color;
+                                display: block;
+                                padding: 10px 0;
+                            }
+                            div {
+                                font-size: 12px;
+                                line-height: 1.4rem;
+                                word-break: break-all;
+                            }
+                        }
+                    }
                     &:hover {
-                        background: #869791;
-                    }
-                    &:before {
-                        content: '' !important;
-                    }
-                }
-                &.slick-active {
-                    button {
-                        background: @bg-color-blue;
+                        .description {
+                            color: @font-color-blue;
+                        }
                     }
                 }
             }

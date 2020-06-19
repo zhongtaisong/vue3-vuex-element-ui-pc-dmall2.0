@@ -1,11 +1,11 @@
 import axios from '@axios';
-// 获取需要展示的图片
-const imgCarouselUrl = `index/banner`;
+// 详情图片
+const introimgsUrl = 'details/introimgs';
 
 class Service {
-    imgCarouselData = (req = {}) => {
+    introimgsData = (req = {}) => {
         return new Promise((resolve, reject) => {
-            axios.get(imgCarouselUrl, {
+            axios.get(introimgsUrl, {
                 params: req
             }).then(res => {
                 resolve(res);

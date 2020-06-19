@@ -1,58 +1,61 @@
 <template>
-  <div className='common_width'>
-      <div className='dm_CarouselBox'>
-        1111111111
-          <!-- {
-              toJS( carouselList ).length ? (
-                  <Carousel autoplay effect="fade">
-                      {
-                          toJS( carouselList ).map( item => {
-                              return (
-                                  <Link key={ item.id } 
-                                      to={'/views/products/detail/' + item.id}
-                                  >
-                                      <img src={ `${ PUBLIC_URL }${ item.bannerPic }` } alt='' title={ item.description } />
-                                  </Link>
-                              );
-                          } )
-                      }
-                  </Carousel>
-              ) : ''
-          } -->
-      </div>
-      <!-- <Recommend {...this.props} /> -->
-  </div>  
+    <div class="dm_home_carouselBox common_width">
+        <div class="dm_home_carouselBox__banner">
+            <Carousel :list='bannerList' :autoplay='true' height='400px' />
+        </div>
+        <div class="dm_home_carouselBox__push">
+            <Carousel :list='onepushList' :isOnly='false' :autoplay='true' :interval='8000' indicatorPosition='none' arrow='always' height='140px' />
+        </div>
+    </div>
 </template>
 
 <script>
-  // 接口服务
-  import service from './service';
-
-  export default {
+export default {
     data() {
-      return ({
-        carouselList: []
-      })
+        return {
+            bannerList: [],
+            onepushList: []
+        };
     },
     mounted() {
-      this.imgCarouselData();
+        this.getBannerData();
+        this.getOnepushData();
     },
     methods: {
-      async imgCarouselData() {
-          const res = await service.imgCarouselData();
-          try{
-              if( res.data.code === 200 ){
-                  // res.data.data && this.setCarouselList( res.data.data );
-                  console.log('3333333', res.data.data);
-              }
-          }catch(err) {
-              console.log(err);
-          }
-      }
+        // 获取banner数据
+        async getBannerData() {
+            const res = await this.$service.getBannerData();
+            try {
+                if (res.data.code === 200) {
+                    const { data = [] } = res.data || {};
+                    data.map(item => {
+                        item["bannerPic"] = item["bannerPic"] ? this.$url + item["bannerPic"] : "";
+                    });
+                    this.bannerList = data;
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 获取单品推广数据
+        async getOnepushData() {
+            const res = await this.$service.getOnepushData();
+            try {
+                if (res.data.code === 200) {
+                    const { data = [] } = res.data || {};
+                    data.map(item => {
+                        item["mainPicture"] = item["mainPicture"] ? this.$url + item["mainPicture"] : "";
+                    });
+                    this.onepushList = data;
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
-  }
+};
 </script>
 
-<style lang="less" scoped>
-  @import './index.less';
+<style lang="less">
+    @import "./index.less";
 </style>

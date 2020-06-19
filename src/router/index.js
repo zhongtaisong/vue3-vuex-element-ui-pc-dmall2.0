@@ -1,7 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-const Home = () => import('@pages/home');
+const Home = () => import(/* webpackChunkName: 'home' */ '@pages/home');
+const Products = () => import(/* webpackChunkName: 'products' */ '@pages/products');
+const ProductsDetails = () => import(/* webpackChunkName: 'productsDetails' */ '@pages/productsDetails');
+const Login = () => import(/* webpackChunkName: 'login' */ '@pages/login');
 // import Products from '@pages/Products';
 // import ProductsDetail from '@pages/ProductsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
@@ -22,14 +25,32 @@ const Home = () => import('@pages/home');
 Vue.use(Router);
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: ['哈哈哈']
-  }
+    {
+        path: '/',
+        name: 'home',
+        component: Home,
+        meta: ['首页']
+    },
+    {
+        path: '/products',
+        name: 'products',
+        component: Products,
+        meta: ['杂货铺']
+    },
+    {
+        path: '/products/detail/:id',
+        name: 'productsDetails',
+        component: ProductsDetails,
+        meta: ['商品详情']
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login,
+        meta: ['登录']
+    }
 ];
 
 export default new Router({
-  routes
+    routes
 });

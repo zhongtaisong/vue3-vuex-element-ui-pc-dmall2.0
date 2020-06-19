@@ -1,24 +1,26 @@
 <template>
-  <div class="dm_Home">
+  <div class="dm_home">
       <CarouselBox />
-      <!-- <HotThisWeek {...this.props} /> -->
+      <HotThisWeek />
   </div>
 </template>
 
 <script>
-  // 走马灯
-  import CarouselBox from './components/CarouselBox';
+  // banner
+  import CarouselBox from './components/carouselBox';
   // 本周热门
-  // import HotThisWeek from './components/HotThisWeek';
+  import HotThisWeek from './components/hotThisWeek';
 
   export default {
     name: 'Home',
     components: {
-      CarouselBox
+      CarouselBox, HotThisWeek
     }
   }
 </script>
 
 <style lang="less" scoped>
-
+    .dm_home {
+        margin: 0 0 30px;
+    }
 </style>
