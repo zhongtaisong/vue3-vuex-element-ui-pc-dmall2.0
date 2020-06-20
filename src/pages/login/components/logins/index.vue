@@ -1,76 +1,34 @@
 <template>
-    <div class="dm_login_logins" :model="ruleForm" :rules="rules" ref="ruleForm">        
-        <el-form class='login'>
+    <div class="dm_login_logins">        
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
             <el-row>
                 <el-col :span='24'>
-                    <el-form-item props='uname'>
-                        <el-input v-model="ruleForm.uname" placeholder="请输入用户名"></el-input>
-                        <!-- {
-                            getFieldDecorator('uname', {
-                                rules: [{ 
-                                    required: true, 
-                                    message: '必填', 
-                                    whitespace: true 
-                                }],
-                                initialValue: localStorage.getItem('uname')
-                            })(
-                                <Input
-                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="请输入用户名"
-                                />
-                            )
-                        } -->
+                    <el-form-item prop='uname'>
+                        <el-input v-model="ruleForm.uname" placeholder="请输入用户名" size='small'></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span='24'>
-                    <el-form-item props='upwd'>
-                        <el-input v-model="ruleForm.upwd" placeholder="请输入密码"></el-input>
-                        <!-- {
-                            getFieldDecorator('upwd', {
-                                rules: [{ 
-                                    required: true, 
-                                    message: '必填', 
-                                    whitespace: true 
-                                }]
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="请输入密码"
-                                />
-                            )
-                        } -->
+                    <el-form-item prop='upwd'>
+                        <el-input v-model="ruleForm.upwd" placeholder="请输入密码" type="password" size='small'></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row class='password-operation'>
+            <el-row class='dm_login_logins__pwd'>
                 <el-col :span='12'>
-                    <el-form-item  props='isRemember'>
-                        <el-checkbox>记住密码</el-checkbox>
-                        <!-- {
-                            getFieldDecorator('isRemember', {
-                                rules: [{ 
-                                    required: false, 
-                                    message: '非必填'
-                                }]
-                            })(
-                                <Checkbox.Group>
-                                    <Checkbox class='isRemember' value='1'>记住密码</Checkbox>
-                                </Checkbox.Group>
-                            )
-                        } -->
-                    </el-form-item>            
+                    <el-form-item prop='isRemember'>
+                        <el-checkbox v-model="ruleForm.isRemember">记住密码</el-checkbox>
+                    </el-form-item>
                 </el-col>
                 <el-col :span='12' :style="{ textAlign: 'right' }">
                     <el-form-item>
-                        <a>忘记密码？</a>
+                        <a @click="handleTarget('ForgetPassword')">忘记密码？</a>
                     </el-form-item>            
                 </el-col>
             </el-row>
-            <el-row class='password-operation'>
+            <el-row class='dm_login_logins__btn'>
                 <el-col :span='24'>
                     <el-form-item>
-                        <el-button type="primary" :style="{ width: '100%' }">登录</el-button>
+                        <el-button type="primary" :style="{ width: '100%' }" size='small' @click="submitForm('ruleForm')">登 录</el-button>
                     </el-form-item>            
                 </el-col>
                 <el-col :span='24'>
@@ -85,62 +43,64 @@
 
 <script>
 export default {
+    props: {
+        handleTarget: Function
+    },
     data() {
         return {
             ruleForm: {
                 uname: localStorage.getItem('uname'),
-                upwd: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                upwd: null,
+                isRemember: false
             },
             rules: {
-                // uname: [
-                //     { required: true, message: '请输入活动名称', trigger: 'blur' },
-                //     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                // ],
-                // upwd: [
-                //     { required: true, message: '请选择活动区域', trigger: 'change' }
-                // ],
-                // date1: [
-                //     { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                // ],
-                // date2: [
-                //     { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-                // ],
-                // type: [
-                //     { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-                // ],
-                // resource: [
-                //     { required: true, message: '请选择活动资源', trigger: 'change' }
-                // ],
-                // desc: [
-                //     { required: true, message: '请填写活动形式', trigger: 'blur' }
-                // ]
+                uname: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' }
+                ],
+                upwd: [
+                    { required: true, message: '请输入密码', trigger: 'blur' }
+                ]
             }
         }
     }, 
     methods: {
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    alert('submit!');
+        // 登录 - 表单校验
+        submitForm(refName) {
+            let { uname, upwd, isRemember } = this.ruleForm || {};
+            this.$refs[refName].validate((valid) => {
+                if(valid) {                    
+                    this.postLogData({
+                        uname, 
+                        upwd: this.$md5(upwd + this.$pwd_key),
+                        // 0表示不记住密码， 1表示记住密码
+                        isRemember: isRemember * 1
+                    });
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
+        // 登录
+        async postLogData(params={}) {
+            const res = await this.$service.postLogData(params);
+            try{
+                if( res.data.code === 200 ){
+                    const { data } = res.data || {};
+                    // data.uname && $state.setUname( data.uname );
+                    // data.token && $state.setToken( data.token );
+                    // data.uname && sessionStorage.setItem('uname', data.uname);
+                    // data.uname && localStorage.setItem('uname', data.uname);
+                    // message.success('登录成功！');
+                    // this.history.push('/views/home');
+                }
+            }catch(err) {
+                console.log(err);
+            }
         }
     }
 };
 </script>
 
 <style lang="less">
-    // @import "./index.less";
+    @import "./index.less";
 </style>

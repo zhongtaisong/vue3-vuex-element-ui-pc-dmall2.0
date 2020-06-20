@@ -1,0 +1,35 @@
+@import '~@com/index.less';
+
+.dm_login_newPassword {
+    .el-form {
+        max-width: 450px !important;
+        .el-row {
+            .el-col-24 {
+                .el-form-item {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-bottom: 24px;
+                    &__label {
+                        color: #fff;
+                    }
+                    &__content {
+                        width: 300px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+    &__btn {
+        .el-form-item {
+            margin-bottom: 0 !important;
+            &__content {
+                color: @main-color;
+                a {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+}

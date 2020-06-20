@@ -2,9 +2,12 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import App from './App.vue';
 import router from '@router';
+import md5 from 'js-md5';
 import './plugins/element.js'
+// 自定义主题颜色
+import './theme/index.css'
 // url前缀
-import { PUBLIC_URL } from "@config";
+import { PUBLIC_URL, PWD_KEY } from "@config";
 // http
 import Http from '@service/http.js';
 // service
@@ -24,6 +27,8 @@ Vue.prototype.$http = Http;
 Vue.prototype.$service = Service;
 Vue.prototype.$selectDic = JSON.parse(sessionStorage.getItem('selectDic') || '{}');
 Vue.prototype.$tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
+Vue.prototype.$md5 = md5;
+Vue.prototype.$pwd_key = PWD_KEY;
 
 // 保留两位小数
 Vue.filter('keepTwoDecimalPlaces', (value) => {
