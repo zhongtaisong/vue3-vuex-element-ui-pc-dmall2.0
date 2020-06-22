@@ -61,7 +61,29 @@
             }
         }
     }
-    .all_products {}
+    .all_products {        
+        margin-top: 10px;
+        .dm_card {
+            .el-col {
+                margin-bottom: 10px;
+                &:not(:nth-child(5n)) {
+                    margin-right: 10px;
+                }
+                .el-card {
+                    &__body {
+                        padding: 10px;
+                    }
+                }
+            }
+            &__btn {
+                display: flex;
+                margin-top: 10px;
+                >div {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
     .el-pagination {
         text-align: right;
         padding: 10px 0;

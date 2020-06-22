@@ -83,7 +83,12 @@
                 </div>
             </div>
             <div class='all_products'>
-                <Card :list='productList' :num='5' width='18%' />
+                <Card :list='productList' :num='5' width='calc(20% - 10px)' :len='56'>                    
+                    <div class="dm_card__btn">
+                        <el-input-number controls-position="right" :min='1' :max='99' size='small' v-model="num"></el-input-number>
+                        <el-button type="primary" plain size='small'>加入购物车</el-button>
+                    </div>
+                </Card>
             </div>
             <el-pagination
                 background
@@ -105,9 +110,9 @@ export default {
             productList: [],
             filterList: [],
             total: 0,
-            BRAND_LIST: this.$tableDic.BRAND_LIST,
             filterObj: {},
-            visible: {}
+            visible: {},
+            num: 1
         }
     },
     mounted() {
@@ -177,6 +182,11 @@ export default {
             } catch (err) {
                 console.log(err);
             }
+        }
+    },
+    computed: {
+        BRAND_LIST() {
+            return this.$tableDic.BRAND_LIST;
         }
     }
 }

@@ -6,6 +6,7 @@ const Products = () => import(/* webpackChunkName: 'products' */ '@pages/product
 const ProductsDetails = () => import(/* webpackChunkName: 'productsDetails' */ '@pages/productsDetails');
 const Login = () => import(/* webpackChunkName: 'login' */ '@pages/login');
 const Register = () => import(/* webpackChunkName: 'register' */ '@pages/register');
+const ShoppingCart = () => import(/* webpackChunkName: 'shoppingCart' */ '@pages/shoppingCart');
 // import Products from '@pages/Products';
 // import ProductsDetail from '@pages/ProductsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
@@ -55,6 +56,12 @@ const routes = [
         name: 'register',
         component: Register,
         meta: ['注册']
+    },
+    {
+        path: '/shoppingCart',
+        name: 'shoppingCart',
+        component: ShoppingCart,
+        meta: ['购物车']
     }
 ];
 

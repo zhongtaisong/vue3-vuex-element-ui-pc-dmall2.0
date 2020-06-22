@@ -10,3 +10,8 @@ export const getCartNumData = () => {
     return Http.get('cart/select/num');
 }
 
+// 发送 - 退出登录 - 数据
+export const postLogoutData = () => {
+    return Http.post('users/logout');
+}
+

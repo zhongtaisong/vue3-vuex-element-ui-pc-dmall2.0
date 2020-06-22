@@ -1,6 +1,6 @@
 <template>
     <div class="dm_login_logins">
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" @keyup.enter.native="submitForm('ruleForm')">
             <el-row>
                 <el-col :span='24'>
                     <el-form-item prop='uname'>
@@ -85,10 +85,13 @@ export default {
             const res = await this.$service.postLogData(params);
             try{
                 if( res.data.code === 200 ){
-                    const { uname } = res.data.data || {};
-                    uname && sessionStorage.setItem('uname', uname);
-                    uname && localStorage.setItem('uname', uname);
-                    this.$router.push('/');
+                    const { uname, token } = res.data.data || {};
+                    sessionStorage.setItem('uname', uname);
+                    sessionStorage.setItem('token', token);
+                    localStorage.setItem('uname', uname);
+                    setTimeout(() => {
+                        this.$router.push('/');
+                    }, 1000)
                 }
             }catch(err) {
                 console.log(err);

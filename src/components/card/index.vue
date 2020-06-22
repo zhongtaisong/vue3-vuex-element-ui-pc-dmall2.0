@@ -2,14 +2,15 @@
     <div class="dm_card">
         <el-row>
             <el-col :span='Math.floor(24 / num)' v-for="s in list" :key='s.id' :style='{ width }'>
-                <el-card :body-style="{ cursor: 'pointer' }" shadow="never" @click.native="$router.push({ name: 'productsDetails', params: { id: s.id } })">
-                    <img :src="s.mainPicture" alt :title="s.productName" :width='imgWidth' />
+                <el-card shadow="never">
+                    <img :src="s.mainPicture" alt :title="s.productName" :width='imgWidth' @click="$router.push({ name: 'productsDetails', params: { id: s.id } })" />
                     <div>
                         <p>
                             <span class="unit">￥</span>
                             {{ s.price | keepTwoDecimalPlaces }}
                         </p>
-                        <div class="description" :title="s.description">{{ s.description | threeLineEllipsis(50) }}</div>
+                        <div class="description" :title="s.description"  @click="$router.push({ name: 'productsDetails', params: { id: s.id } })">{{ s.description | threeLineEllipsis(len) }}</div>
+                        <slot></slot>
                     </div>
                 </el-card>
             </el-col>
@@ -37,6 +38,10 @@ export default {
         width: {
             type: String,
             default: '18%'
+        },
+        len: {
+            type: Number,
+            default: 50
         }
     }
 };

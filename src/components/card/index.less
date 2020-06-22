@@ -5,7 +5,7 @@
         display: flex;
         flex-wrap: wrap;
         .el-col {
-            margin: 1%;
+            // margin: 1%;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
             border-color: rgba(0, 0, 0, 0.1);
             .el-card {
@@ -14,6 +14,7 @@
                         height: 100%;
                         display: block;
                         margin: 0 auto;
+                        cursor: pointer;
                     }
                     >div {
                         flex: 1;
@@ -27,10 +28,11 @@
                             justify-content: flex-start;
                             align-items: baseline;
                         }
-                        div {
+                        .description {
                             font-size: 12px;
                             line-height: 1.4rem;
                             word-break: break-all;
+                            cursor: pointer;
                         }
                     }
                 }

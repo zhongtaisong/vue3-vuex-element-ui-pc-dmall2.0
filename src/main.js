@@ -35,9 +35,9 @@ Vue.prototype.$pwd_key = PWD_KEY;
 Vue.prototype.$utils = utils;
 
 // 保留两位小数
-Vue.filter('keepTwoDecimalPlaces', (value) => {
+Vue.filter('keepTwoDecimalPlaces', (value, len=2) => {
     if( isNaN(value) ) return 0;
-    return value.toFixed(2);
+    return value.toFixed(len);
 });
 // 超出 3 行内容溢出，则显示省略号...
 Vue.filter('threeLineEllipsis', (value, len) => {

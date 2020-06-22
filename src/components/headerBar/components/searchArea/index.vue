@@ -13,7 +13,7 @@
                     <el-button type='primary' slot="append" icon="el-icon-search" @click="getSearchKws"></el-button>
                 </el-input>
                 <el-badge :value='66' :max='99'>
-                    <el-button icon='el-icon-shopping-cart-2' type="primary">我的购物车</el-button>
+                    <el-button icon='el-icon-shopping-cart-2' type="primary" @click.native="$router.push('/shoppingCart')">我的购物车</el-button>
                 </el-badge>
             </el-col>
         </el-row>
