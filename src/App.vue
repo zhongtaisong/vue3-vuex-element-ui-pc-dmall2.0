@@ -3,6 +3,7 @@
         <HeaderBar v-if='isShowHeader'></HeaderBar>
         <router-view></router-view>
         <FooterBar v-if='isShowHeader'></FooterBar>
+        <el-backtop></el-backtop>
     </div>
 </template>
 
@@ -11,7 +12,7 @@ export default {
     name: "app",
     data() {
         return {
-            noHeader: ['/login']
+            noHeader: ['/login', '/register']
         }
     },
     mounted() {

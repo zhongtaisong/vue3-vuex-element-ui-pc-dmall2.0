@@ -1,5 +1,5 @@
 <template>
-    <div class="dm_login_logins">        
+    <div class="dm_login_logins">
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
             <el-row>
                 <el-col :span='24'>
@@ -33,7 +33,7 @@
                 </el-col>
                 <el-col :span='24'>
                     <el-form-item>
-                        <a>新用户注册</a>
+                        <router-link to='/register'>新用户注册</router-link>
                     </el-form-item>            
                 </el-col>
             </el-row>
@@ -85,13 +85,10 @@ export default {
             const res = await this.$service.postLogData(params);
             try{
                 if( res.data.code === 200 ){
-                    const { data } = res.data || {};
-                    // data.uname && $state.setUname( data.uname );
-                    // data.token && $state.setToken( data.token );
-                    // data.uname && sessionStorage.setItem('uname', data.uname);
-                    // data.uname && localStorage.setItem('uname', data.uname);
-                    // message.success('登录成功！');
-                    // this.history.push('/views/home');
+                    const { uname } = res.data.data || {};
+                    uname && sessionStorage.setItem('uname', uname);
+                    uname && localStorage.setItem('uname', uname);
+                    this.$router.push('/');
                 }
             }catch(err) {
                 console.log(err);

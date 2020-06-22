@@ -3,8 +3,8 @@
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
             <el-row>
                 <el-col :span='24'>
-                    <el-form-item label="密码" prop='oldUpwd'>
-                        <el-input v-model="ruleForm.oldUpwd" placeholder="请输入密码" size='small'></el-input>
+                    <el-form-item label="密码" prop='pwd'>
+                        <el-input v-model="ruleForm.pwd" placeholder="请输入密码" size='small'></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span='24'>
@@ -30,13 +30,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     props: {
         handleTarget: Function
     },
     data() {
         // 密码 - 校验
-        let validOldUpwd = (rule, value, callback) => {
+        let validPwd = (rule, value, callback) => {
             if( this.ruleForm.newUpwd !== null ) {
                 this.$refs.ruleForm.validateField('newUpwd');
             }
@@ -44,7 +46,7 @@ export default {
         };
         // 确认密码 - 校验
         let validNewUpwd = (rule, value, callback) => {
-            if( value !== this.ruleForm.oldUpwd ) {
+            if( value !== this.ruleForm.pwd ) {
                 callback(new Error('两次输入密码不一致!'));
             }else {
                 callback();
@@ -52,13 +54,13 @@ export default {
         };
         return {
             ruleForm: {
-                oldUpwd: null,
+                pwd: null,
                 newUpwd: null
             },
             rules: {
-                oldUpwd: [
+                pwd: [
                     { required: true, message: '请输入邮箱', trigger: 'blur' },
-                    { validator: validOldUpwd, trigger: ['blur', 'change'] }
+                    { validator: validPwd, trigger: ['blur', 'change'] }
                 ],
                 newUpwd: [
                     { required: true, message: '请再次输入密码', trigger: 'blur' },
@@ -66,37 +68,43 @@ export default {
                 ]
             }
         }
-    }, 
+    },
     methods: {
-        // 验证信息 - 表单校验
+        // 提交新密码 - 表单校验
         submitForm(refName) {
             this.$refs[refName].validate((valid) => {
                 if(valid) {
-                    console.log('22222222', this.ruleForm)
-                    // this.postValiForgetPwdData({...this.ruleForm});
+                    this.postUpdateUpwdData({
+                        uname: this.uname,
+                        oldUpwd: this.oldUpwd,
+                        newUpwd: this.$md5(this.ruleForm.newUpwd + this.$pwd_key)
+                    });
                 } else {
                     return false;
                 }
             });
         },
-        // 验证信息
-        async postValiForgetPwdData(params={}) {
-            const res = await this.$service.postValiForgetPwdData({
+        // 提交新密码
+        async postUpdateUpwdData(params={}) {
+            const res = await this.$service.postUpdateUpwdData({
                 ...params,
                 isForgetPwd: true
             });
             try{
                 if( res.data.code === 200 ){
-                    // const { data={} } = res.data || {};
-                    // if(data) {
-                    //     this.setUpwdObj(data);
-                    // }
-                    // message.success(res.data.msg);
+                    res.data.data && localStorage.setItem('uname', res.data.data);
+                    this.handleTarget('Logins');
                 }
             }catch(err) {
                 console.log(err);
             }
         }
+    },
+    computed: {
+        ...mapState({
+            uname: state => state.login.uname,
+            oldUpwd: state => state.login.oldUpwd,
+        })
     }
 };
 </script>

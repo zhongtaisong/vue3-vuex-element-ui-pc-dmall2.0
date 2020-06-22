@@ -11,7 +11,9 @@
             <el-carousel-item v-for="(c, cIndex) in computedPageNum" :key="c.id || cIndex">
                 <el-row type='flex' justify='space-between'>
                     <el-col :span='Math.floor(24 / num)' v-for="(s, sIndex) in sliceList" :key='s.id || sIndex'>
-                        <el-card :body-style="{ cursor: 'pointer' }" :title='s.description' shadow="never">
+                        <el-card :body-style="{ cursor: 'pointer' }" :title='s.description' shadow="never"
+                            @click.native="$router.push({ name: 'productsDetails', params: { id: s.id } })"
+                        >
                             <img :src="s.mainPicture" alt :title="s.description" />
                             <div>
                                 <span>{{ s.productName }}</span>

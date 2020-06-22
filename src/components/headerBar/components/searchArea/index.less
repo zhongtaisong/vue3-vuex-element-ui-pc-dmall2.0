@@ -1,17 +1,15 @@
 @import '~@com/index.less';
 
-.dm_headerBar_searchArea, .dm_SearchInput {
-    width: 100%;
-    background: #fff;
-}
 .dm_headerBar_searchArea {
+    width: 100%;
     height: 82px;
+    background: #fff;
     border-bottom: 1px solid #e6e6e6;
     .el-row {
         display: flex;
         align-items: center;
         height: 100%;
-        .el-col-16 {
+        .el-col-11 {
             display: flex;
             padding-left: 30px;
             >a {
@@ -26,6 +24,7 @@
                 font-weight: bold;
                 cursor: pointer;
                 text-decoration: none;
+                box-sizing: border-box;
                 &:hover {
                     color: @font-color-white;
                     background-color: @main-color;
@@ -42,29 +41,22 @@
             &.logo {
                 cursor: pointer;
             }
+        }
+        .el-col-9 {
+            display: flex;
+            justify-content: space-between;
+            .el-input-group {
+                margin: 0 10px;
+                &__append {
+                    padding: 0 16px;
+                    background-color: @main-color;
+                    color: #fff;
+                    border-color: @main-color;
+                }
+            }
             .el-button {
                 padding-top: 8px;
                 padding-bottom: 8px;
-            }
-            >div {
-                margin-left: 10px;
-            }
-        }
-    }
-}
-.dm_SearchInput {
-    height: 74px;
-    .el-row {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        .el-input-search {
-            max-width: 500px;
-            button {
-                i {                        
-                    font-size: 15px;
-                }
             }
         }
     }

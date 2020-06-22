@@ -40,15 +40,6 @@ export default {
         handleTarget: Function
     },
     data() {
-        // 手机号码 - 校验
-        let validatePhone = (rule, value, callback) => {
-            let reg = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
-            if ( !reg.test(value) ) {
-                callback('请输入正确的手机号码');
-            } else {
-                callback();
-            }
-        };
         return {
             ruleForm: {
                 email: null,
@@ -65,7 +56,7 @@ export default {
                 ],
                 phone: [
                     { required: true, message: '请输入手机号码', trigger: 'blur' },
-                    { validator: validatePhone, trigger: ['blur', 'change'] }
+                    { validator: this.$utils.validatePhoneForm, trigger: ['blur', 'change'] }
                 ]
             }
         }
@@ -86,11 +77,10 @@ export default {
             const res = await this.$service.postValiForgetPwdData(params);
             try{
                 if( res.data.code === 200 ){
-                    // const { data={} } = res.data || {};
-                    // if(data) {
-                    //     this.setUpwdObj(data);
-                    // }
-                    // message.success(res.data.msg);
+                    const { data={} } = res.data || {};
+                    this.$store.dispatch('setOldUpwd', data.oldUpwd);
+                    this.$store.dispatch('setUname', data.uname);
+                    this.handleTarget('NewPassword');
                 }
             }catch(err) {
                 console.log(err);

@@ -21,6 +21,7 @@ export default {
         this.getHotData();
     },
     methods: {
+        // 获取 - 热门推荐 - 数据
         async getHotData() {
             const res = await this.$service.getHotData();
             try {

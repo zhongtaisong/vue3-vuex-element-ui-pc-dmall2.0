@@ -1,26 +1,27 @@
 <template>
-  <div class="dm_home">
-      <CarouselBox />
-      <HotThisWeek />
-  </div>
+    <div class="dm_home">
+        <CarouselBox />
+        <HotThisWeek />
+    </div>
 </template>
 
 <script>
-  // banner
-  import CarouselBox from './components/carouselBox';
-  // 本周热门
-  import HotThisWeek from './components/hotThisWeek';
+// banner
+import CarouselBox from "./components/carouselBox";
+// 本周热门
+import HotThisWeek from "./components/hotThisWeek";
 
-  export default {
-    name: 'Home',
+export default {
+    name: "Home",
     components: {
-      CarouselBox, HotThisWeek
+        CarouselBox,
+        HotThisWeek
     }
-  }
+};
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
     .dm_home {
-        margin: 0 0 30px;
+    margin: 0 0 30px;
     }
 </style>

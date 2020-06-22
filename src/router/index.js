@@ -5,6 +5,7 @@ const Home = () => import(/* webpackChunkName: 'home' */ '@pages/home');
 const Products = () => import(/* webpackChunkName: 'products' */ '@pages/products');
 const ProductsDetails = () => import(/* webpackChunkName: 'productsDetails' */ '@pages/productsDetails');
 const Login = () => import(/* webpackChunkName: 'login' */ '@pages/login');
+const Register = () => import(/* webpackChunkName: 'register' */ '@pages/register');
 // import Products from '@pages/Products';
 // import ProductsDetail from '@pages/ProductsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
@@ -48,9 +49,28 @@ const routes = [
         name: 'login',
         component: Login,
         meta: ['登录']
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register,
+        meta: ['注册']
     }
 ];
 
+// 解决跳转相同路由，控制台出现报错信息的问题
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
+
 export default new Router({
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if( savedPosition ) {
+            return savedPosition;
+        }else {
+            return { x: 0, y: 0 };
+        }
+    }
 });

@@ -5,18 +5,12 @@
         display: flex;
         flex-wrap: wrap;
         .el-col {
-            // width: 18%;
             margin: 1%;
-            // &:not(:nth-child(5n)) {
-            //     margin-right: 1%;
-            //     margin-left: 1%;
-            // }
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
             border-color: rgba(0, 0, 0, 0.1);
             .el-card {
                 &__body {
                     >img {
-                        // width: 80%;
                         height: 100%;
                         display: block;
                         margin: 0 auto;
@@ -24,12 +18,14 @@
                     >div {
                         flex: 1;
                         overflow: hidden;
-                        span {
+                        p {
                             font-size: 20px;
                             font-weight: bold;
                             color: @main-color;
-                            display: block;
                             padding: 10px 0;
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: baseline;
                         }
                         div {
                             font-size: 12px;

@@ -6,12 +6,12 @@
                 上海
             </el-col>
             <el-col :span='18'>
-                <span>登录</span>
-                <span>注册</span>
-                <span>我的订单</span>
-                <span>我的收藏</span>
-                <span>用户中心</span>
-                <span>商城后台</span>
+                <router-link to='/login'>登录</router-link>
+                <router-link to='register'>注册</router-link>
+                <a>我的订单</a>
+                <a>我的收藏</a>
+                <a>用户中心</a>
+                <a>商城后台</a>
             </el-col>
       </el-row>
   </div>

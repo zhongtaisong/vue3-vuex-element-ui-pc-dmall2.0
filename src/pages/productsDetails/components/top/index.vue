@@ -14,7 +14,7 @@
                 </dl>
             </el-col>
             <el-col :span='16'>
-                <div class="products_title" :title="basicInfo.description || '-'">{{ basicInfo.description || '敬请期待~~~' }}</div>
+                <div class="products_title" :title="basicInfo.description || '-'">{{ (basicInfo.description || '敬请期待~~~') | threeLineEllipsis(86) }}</div>
                 <h3 class='ellipsis' :title='basicInfo.copywriting || "-"'>{{ basicInfo.copywriting || "敬请期待~~~" }}</h3>
                 <div class='price'>售价：
                     <div>
