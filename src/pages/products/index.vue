@@ -83,11 +83,13 @@
                 </div>
             </div>
             <div class='all_products'>
-                <Card :list='productList' :num='5' width='calc(20% - 10px)' :len='56'>                    
-                    <div class="dm_card__btn">
-                        <el-input-number controls-position="right" :min='1' :max='99' size='small' v-model="num"></el-input-number>
-                        <el-button type="primary" plain size='small' @click="addCartClick">加入购物车</el-button>
-                    </div>
+                <Card :list='productList' :num='5' width='calc(20% - 10px)' :len='56'>
+                    <template v-slot='slotProps'>                  
+                        <div class="dm_card__btn">
+                            <el-input-number controls-position="right" :min='1' :max='99' size='small' v-model="slotProps.num" @change='numberChange($event, slotProps)'></el-input-number>
+                            <el-button type="primary" plain size='small' @click="addCartClick(slotProps)">加入购物车</el-button>
+                        </div>
+                    </template>
                 </Card>
             </div>
             <el-pagination
@@ -111,8 +113,7 @@ export default {
             filterList: [],
             total: 0,
             filterObj: {},
-            visible: {},
-            num: 1
+            visible: {}
         }
     },
     mounted() {
@@ -120,9 +121,23 @@ export default {
         this.getFilterData();
     },
     methods: {
+        // 数量 - 操作
+        numberChange(value, props={}) {
+            const { id } = props;
+            this.productList.map(item => {
+                if(item.id == id) {
+                    item.num = value;
+                }
+            })
+        },
         // 加入购物车
-        addCartClick() {
-
+        addCartClick(props={}) {
+            const { id, price, num } = props;
+            this.$store.dispatch('handleAddCart', { list: [{
+                pid: id,
+                num,
+                totalprice: price ? Number(price) * num : price
+            }] })
         },
         // 清空筛选
         clearFilter() {
@@ -167,6 +182,7 @@ export default {
                     const { products=[], total } = res.data.data || {};
                     products.map(item => {
                         item["mainPicture"] = item["mainPicture"] ? this.$url + item["mainPicture"] : "";
+                        item["num"] = 1;
                     });
                     this.productList = products;
                     this.total = total;

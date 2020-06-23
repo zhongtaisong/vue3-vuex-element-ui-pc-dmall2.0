@@ -10,7 +10,7 @@
                             {{ s.price | keepTwoDecimalPlaces }}
                         </p>
                         <div class="description" :title="s.description"  @click="$router.push({ name: 'productsDetails', params: { id: s.id } })">{{ s.description | threeLineEllipsis(len) }}</div>
-                        <slot></slot>
+                        <slot :num='s.num' :price='s.price' :id='s.id' ></slot>
                     </div>
                 </el-card>
             </el-col>

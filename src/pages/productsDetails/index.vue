@@ -52,18 +52,6 @@ export default {
             } catch (err) {
                 console.log(err);
             }
-        },
-        // 加入购物车
-        async postAddCartData(list=[]) {
-            const res = await this.$service.postAddCartData({ 
-                uname: sessionStorage.getItem('uname'),
-                list
-            });
-            try {
-                if (res.data.code === 200) {}
-            } catch (err) {
-                console.log(err);
-            }
         }
 
     }

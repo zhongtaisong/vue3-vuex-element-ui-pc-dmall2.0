@@ -118,6 +118,8 @@ export default {
             if( id ){
                 this.$router.push({ name: 'productsDetails', params: { id } });
                 this.getDetailsData({ id });
+                this.actionIndex = 0;
+                this.num = 1;
             }
         }
 
