@@ -1,6 +1,6 @@
 import Http from './http';
 
-// 获取 - 商品详情
+// 获取 - 商品详情 - 数据
 export const getDetailsData = (data = {}) => {
     return Http.get('details/select', data);
 }

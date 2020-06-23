@@ -1,7 +1,7 @@
 <template>
-    <div class="common_width dm_shoppingCart">
-        <TableTitle title='我的购物车'>
-            <div>（当前购物车共有 <i>{{ getTotal }}</i> 件商品）</div>
+    <div class="common_width dm_myCollection">
+        <TableTitle title='宝贝收藏'>
+            <div>（当前共有 <i>{{ getTotal }}</i> 件藏品）</div>
         </TableTitle>
         <el-table
             :data="tableData"
@@ -31,7 +31,7 @@
                         <span class='ellipsis'>规格：{{ scope.row.spec }}</span>
                     </router-link>
                     <span v-if="c.prop == 'price' || c.prop == 'totalprice'">￥{{ c.prop == 'price' ? scope.row['price'] : c.prop == 'totalprice' ? scope.row['totalprice'] : 0 | keepTwoDecimalPlaces }}</span>
-                    <el-input-number v-if="c.prop == 'num'" controls-position="right" size="small" :min='1' :max=99 :value="scope.row.num" style='width: 100%' @change='numberChange($event, scope)'></el-input-number>
+                    <span v-if="c.prop == 'num'">{{ scope.row.num }}</span>
                 </template>
             </el-table-column>
             <el-table-column
@@ -43,22 +43,18 @@
                 <template slot-scope="scope">             
                     <div class='operation'>
                         <span @click="deleteCartClick(scope.row.id)">删除</span>
-                        <span @click="addCollectionClick(scope.row.id)">加入收藏</span>
+                        <span @click="addCollectionClick(scope.row.id)">加入购物车</span>
                     </div>
                 </template>
             </el-table-column>
         </el-table>
-        <el-row class="dm_shoppingCart__btn">
+        <el-row class="dm_myCollection__btn">
             <el-col :span='12' class='left'>
                 <el-button plain size='small' @click="batchClick('del')">批量删除</el-button>
-                <el-button plain size='small' @click="batchClick('col')">批量加入收藏</el-button>
+                <el-button plain size='small' @click="batchClick('col')">批量加入购物车</el-button>
             </el-col>
             <el-col :span='12' class='right'>
                 <span class='num'>已选择<i>{{ getTotalNum }}</i>件商品</span>
-                <div>
-                    总价：<span>¥{{ getTotalPrice | keepTwoDecimalPlaces }}</span>
-                </div>
-                <span class='go-pay'>去结算</span>
             </el-col>
         </el-row>
     </div>
@@ -81,10 +77,10 @@ export default {
         }
     },
     mounted() {
-        this.getSelectCartData();
+        this.getAllCollectionData();
     },
     methods: {
-        // 批量 删除/加入收藏
+        // 批量 删除/加入购物车
         batchClick(_this) {
             let selection = this.selection;
             let ids = selection.map(item => item.id);
@@ -102,7 +98,7 @@ export default {
                 col: () => {
                     if( !selection.length ) {
                         this.$message({
-                            message: '请选择需要加入收藏的商品！',
+                            message: '请选择需要加入购物车的商品！',
                             type: 'warning'
                         });
                     }else{
@@ -119,16 +115,16 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.postDeleteCartData({
+                this.postDeleteCollectionData({
                     ids: Array.isArray(id) ? id : [id]
                 });
             }).catch(() => {
                 return;
             })
         },
-        // 加入收藏 - 操作
+        // 加入购物车 - 操作
         addCollectionClick(id) {
-            this.$confirm('此商品确认加入收藏?', '提示', {
+            this.$confirm('此商品确认加入购物车?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
@@ -140,22 +136,6 @@ export default {
                 return;
             })
         },
-        // 加减数量
-        numberChange(value, scope={}) {
-            const { row={}, $index } = scope;
-            let { id, price } = row;
-            let totalprice = parseFloat(price) * value;
-            this.postUpdateCartNumData({
-                id, 
-                num: value,
-                totalprice,
-            }).then(code => {
-                if(code == 200) {
-                    this.tableData[$index].num = value;
-                    this.tableData[$index].totalprice = totalprice;
-                }
-            })
-        },
         // 全选
         rowAll(selection) {
             this.selection = selection;
@@ -165,11 +145,11 @@ export default {
             this.selection = selection;
             this.row = row;
         },
-        // 查询购物车
-        async getSelectCartData() {
-            const res = await this.$service.getSelectCartData({
+        // 查询宝贝收藏
+        async getAllCollectionData() {
+            const res = await this.$service.getAllCollectionData({
                 uname: sessionStorage.getItem('uname'),
-                collection: 0
+                collection: 1
             });
             try {
                 if (res.data.code === 200) {
@@ -182,24 +162,16 @@ export default {
                 console.log(err);
             }
         },
-        // 更新商品数量
-        async postUpdateCartNumData(params = {}) {
-            const res = await this.$service.postUpdateCartNumData({
-                uname: sessionStorage.getItem('uname'),                
-                ...params
-            });
-            return res.data.code;
-        },
-        // 加入收藏
+        // 加入购物车
         async postAddCollectionData(params = {}) {
             const res = await this.$service.postAddCollectionData({
                 uname: sessionStorage.getItem('uname'),                
-                collection: 1,
+                collection: 0,
                 ...params
             });
             try {
                 if (res.data.code === 200) {
-                    this.getSelectCartData();
+                    this.getAllCollectionData();
                     this.$store.dispatch('getCartNumData');
                 }
             } catch (err) {
@@ -207,14 +179,14 @@ export default {
             }
         },
         // 删除
-        async postDeleteCartData(params = {}) {
-            const res = await this.$service.postDeleteCartData({
+        async postDeleteCollectionData(params = {}) {
+            const res = await this.$service.postDeleteCollectionData({
                 uname: sessionStorage.getItem('uname'),
                 ...params
             });
             try {
                 if (res.data.code === 200) {
-                    this.getSelectCartData();
+                    this.getAllCollectionData();
                 }
             } catch (err) {
                 console.log(err);
@@ -222,13 +194,6 @@ export default {
         }
     },
     computed: {
-        getTotalPrice() {
-            let selection = this.selection;
-            let t = selection.reduce((total, item, index, arr) => {
-                return total + item.totalprice;
-            }, 0)
-            return t;
-        },
         getTotalNum() {
             let selection = this.selection;
             let num = selection.reduce((total, item, index, arr) => {

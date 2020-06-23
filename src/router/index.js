@@ -8,6 +8,8 @@ const Login = () => import(/* webpackChunkName: 'login' */ '@pages/login');
 const Register = () => import(/* webpackChunkName: 'register' */ '@pages/register');
 const ShoppingCart = () => import(/* webpackChunkName: 'shoppingCart' */ '@pages/shoppingCart');
 const SearchResults = () => import(/* webpackChunkName: 'searchResults' */ '@pages/searchResults');
+const MyOrder = () => import(/* webpackChunkName: 'myOrder' */ '@pages/myOrder');
+const MyCollection = () => import(/* webpackChunkName: 'myCollection' */ '@pages/myCollection');
 // import Products from '@pages/Products';
 // import ProductsDetail from '@pages/ProductsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
@@ -69,6 +71,18 @@ const routes = [
         name: 'searchResults',
         component: SearchResults,
         meta: ['搜索结果']
+    },
+    {
+        path: '/myOrder',
+        name: 'myOrder',
+        component: MyOrder,
+        meta: ['我的订单']
+    },
+    {
+        path: '/myCollection',
+        name: 'myCollection',
+        component: MyCollection,
+        meta: ['我的收藏']
     }
 ];
 

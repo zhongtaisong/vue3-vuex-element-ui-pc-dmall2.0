@@ -1,6 +1,6 @@
 import Http from './http';
 
-// 获取 - banner图片
+// 获取 - banner图片 - 数据
 export const getBannerData = () => {
     return Http.get('index/banner');
 }

@@ -1,6 +1,6 @@
 import Http from './http';
 
-// 获取 - 全部商品
+// 获取 - 全部商品 - 数据
 export const getProductsData = (data = {}) => {
     return Http.post('products/select', data);
 }
