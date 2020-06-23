@@ -50,7 +50,8 @@ export default {
             const res = await this.$service.getKwData(params);
             try{
                 if( res.data.code === 200 ){
-                    // res.data.data && this.setSearchResultList( res.data.data );
+                    this.$store.dispatch('getSearchResult', res.data.data);
+                    this.$router.push('/searchResults');
                 }
             }catch(err) {
                 console.log(err);

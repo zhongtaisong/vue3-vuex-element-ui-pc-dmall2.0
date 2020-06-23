@@ -1,9 +1,8 @@
 <template>
     <div class="common_width dm_shoppingCart">
-        <el-row class='table_title'>
-            <h4>我的购物车</h4>
+        <TableTitle title='我的购物车'>
             <div>（当前购物车共有 <i>{{ getTotal }}</i> 件商品）</div>
-        </el-row>
+        </TableTitle>
         <el-table
             :data="tableData"
             max-height="386"
@@ -31,7 +30,7 @@
                         <span :title='scope.row.description'>{{ scope.row.description }}</span>
                         <span class='ellipsis'>规格：{{ scope.row.spec }}</span>
                     </router-link>
-                    <span v-if="c.prop == 'price' || c.prop == 'totalprice'">{{ c.prop == 'price' ? scope.row['price'] : c.prop == 'totalprice' ? scope.row['totalprice'] : 0 | keepTwoDecimalPlaces }}</span>
+                    <span v-if="c.prop == 'price' || c.prop == 'totalprice'">￥{{ c.prop == 'price' ? scope.row['price'] : c.prop == 'totalprice' ? scope.row['totalprice'] : 0 | keepTwoDecimalPlaces }}</span>
                     <el-input-number v-if="c.prop == 'num'" controls-position="right" size="small" :min='1' :max=99 :value="scope.row.num" style='width: 100%' @change='numberChange($event, scope)'></el-input-number>
                 </template>
             </el-table-column>

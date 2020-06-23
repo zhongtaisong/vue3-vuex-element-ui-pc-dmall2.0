@@ -8,7 +8,8 @@ import login from './modules/login.js';
 Vue.use(Vuex);
 
 const state = {
-    cartNum: 0
+    cartNum: 0,
+    searchResult: []
 };
 
 const mutations = {
@@ -38,6 +39,10 @@ const mutations = {
         } catch (err) {
             console.log(err);
         }
+    },
+    // 获取搜索结果
+    getSearchResult(state, value=[]) {
+        state.searchResult = value;
     }
 };
 
@@ -47,6 +52,9 @@ const actions = {
     },
     getCartNumData(context) {
         context.commit('getCartNumData');
+    },
+    getSearchResult(context, value) {
+        context.commit('getSearchResult', value);
     }
 };
 

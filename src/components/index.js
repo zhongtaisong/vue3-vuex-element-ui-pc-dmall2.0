@@ -4,10 +4,12 @@ import FooterBar from './footerBar';
 // // export { default as OrderDetails } from './orderDetails';
 import Carousel from './carousel';
 import Card from './card';
+import TableTitle from './tableTitle';
 
 export default (Vue) => {
     Vue.component('HeaderBar', HeaderBar);
     Vue.component('FooterBar', FooterBar);
     Vue.component('Carousel', Carousel);
     Vue.component('Card', Card);
+    Vue.component('TableTitle', TableTitle);
 }
