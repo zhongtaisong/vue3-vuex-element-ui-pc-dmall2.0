@@ -12,7 +12,7 @@
                 <el-input placeholder="搜索商品" v-model="kws" size="small" @keyup.native.enter="getSearchKws">
                     <el-button type='primary' slot="append" icon="el-icon-search" @click="getSearchKws"></el-button>
                 </el-input>
-                <el-badge :value='66' :max='99'>
+                <el-badge :value='cartNum' :max='99'>
                     <el-button icon='el-icon-shopping-cart-2' type="primary" @click.native="$router.push('/shoppingCart')">我的购物车</el-button>
                 </el-badge>
             </el-col>
@@ -21,8 +21,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 // logo图片
 import logoImg from '@img/logo.png';
+
 export default {
     data() {
         return {
@@ -55,6 +57,11 @@ export default {
             }
         }
 
+    },
+    computed: {
+        ...mapState({
+            cartNum: state => state.cartNum
+        })
     }
 }
 </script>

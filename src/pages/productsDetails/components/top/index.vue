@@ -72,8 +72,7 @@ export default {
                 return [];
             }
         },
-        getDetailsData: Function,
-        postAddCartData: Function
+        getDetailsData: Function
     },
     data() {
         return {
@@ -98,11 +97,13 @@ export default {
         // 加入购物车
         handleAddCart() {
             const { id, price } = this.basicInfo;
-            this.postAddCartData([{
-                pid: id,
-                num: this.num,
-                totalprice: price ? Number(price) * this.num : price
-            }]);
+            this.$store.dispatch('handleAddCart', {
+                list: [{
+                    pid: id,
+                    num: this.num,
+                    totalprice: price ? Number(price) * this.num : price
+                }]
+            });
         },
         // 数量
         watchNumber(value) {

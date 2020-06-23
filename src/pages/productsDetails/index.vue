@@ -1,7 +1,7 @@
 <template>
     <div class="dm_productsDetails">
         <div class="common_width">
-            <Top :basicInfo='basicInfo' :imgList='imgList' :specs='specs' :getDetailsData='getDetailsData' :postAddCartData='postAddCartData' />
+            <Top :basicInfo='basicInfo' :imgList='imgList' :specs='specs' :getDetailsData='getDetailsData' />
             <Bottom :params='params' :detailsPic='detailsPic' />
         </div>
     </div>

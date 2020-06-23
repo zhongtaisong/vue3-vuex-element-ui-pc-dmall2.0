@@ -86,7 +86,7 @@
                 <Card :list='productList' :num='5' width='calc(20% - 10px)' :len='56'>                    
                     <div class="dm_card__btn">
                         <el-input-number controls-position="right" :min='1' :max='99' size='small' v-model="num"></el-input-number>
-                        <el-button type="primary" plain size='small'>加入购物车</el-button>
+                        <el-button type="primary" plain size='small' @click="addCartClick">加入购物车</el-button>
                     </div>
                 </Card>
             </div>
@@ -120,6 +120,10 @@ export default {
         this.getFilterData();
     },
     methods: {
+        // 加入购物车
+        addCartClick() {
+
+        },
         // 清空筛选
         clearFilter() {
             this.filterObj = {};

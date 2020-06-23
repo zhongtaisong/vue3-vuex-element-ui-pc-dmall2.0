@@ -17,6 +17,7 @@ export default {
     },
     mounted() {
         this.getDicData();
+        this.$store.dispatch('getCartNumData');
     },
     methods: {
         // 获取字典表
