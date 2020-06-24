@@ -31,7 +31,7 @@
                         <span class='ellipsis'>规格：{{ scope.row.spec }}</span>
                     </router-link>
                     <span v-if="c.prop == 'price' || c.prop == 'totalprice'">￥{{ c.prop == 'price' ? scope.row['price'] : c.prop == 'totalprice' ? scope.row['totalprice'] : 0 | keepTwoDecimalPlaces }}</span>
-                    <span v-if="c.prop == 'num'">{{ scope.row.num }}</span>
+                    <span v-if="c.prop == 'num'">x{{ scope.row.num }}</span>
                 </template>
             </el-table-column>
             <el-table-column

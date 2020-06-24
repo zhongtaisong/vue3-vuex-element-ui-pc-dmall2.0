@@ -7,7 +7,9 @@ import * as register from './register';
 import * as headerBar from './headerBar';
 import * as shoppingCart from './shoppingCart';
 import * as myCollection from './myCollection';
+import * as myOrder from './myOrder';
 
 export default {
-    ...common, ...home, ...products, ...productsDetails, ...login, ...register, ...headerBar, ...shoppingCart, ...myCollection
+    ...common, ...home, ...products, ...productsDetails, ...login, ...register, ...headerBar, ...shoppingCart, ...myCollection,
+    ...myOrder
 }
