@@ -25,7 +25,7 @@
             </el-table-column>
         </el-table>
 
-        <div v-for='tb in tableData' :key='tb.id' class="dm_myOrder__content">
+        <div v-for='(tb, index) in tableData' :key='tb.id' class="dm_myOrder__content">
             <el-row class='t_header'>
                 <el-col :span='6'>{{ tb.submitTime }}</el-col>
                 <el-col :span='6'>订单号： {{ tb.ordernum }}</el-col>
@@ -65,7 +65,7 @@
                 >
                     <template>             
                         <div class='operation'>
-                            <span @click="goNextPage('comment', tb.id)">评价</span>
+                            <span @click="goNextPage('comment', tb.id, index)">评价</span>
                             <span @click="goNextPage('detail', tb.id)">详情</span>
                         </div>
                     </template>
@@ -96,10 +96,10 @@ export default {
     },
     methods: {
         // 进入 评价/订单详情
-        goNextPage(_this, id) {
+        goNextPage(_this, id, index) {
             let obj = {
                 comment: () => {
-                    // this.$router.push({ name: 'orderDetails', query: { id } });
+                    this.$router.push({ name: 'myComment', query: { id, oIndex: index } });
                 },
                 detail: () => {
                     this.$router.push({ name: 'orderDetails', query: { id } });

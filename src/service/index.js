@@ -10,8 +10,9 @@ import * as myCollection from './myCollection';
 import * as myOrder from './myOrder';
 import * as settlementPage from './settlementPage';
 import * as orderDetails from './orderDetails';
+import * as myComment from './myComment';
 
 export default {
     ...common, ...home, ...products, ...productsDetails, ...login, ...register, ...headerBar, ...shoppingCart, ...myCollection,
-    ...myOrder, ...settlementPage, ...orderDetails
+    ...myOrder, ...settlementPage, ...orderDetails, ...myComment
 }
