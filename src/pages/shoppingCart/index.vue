@@ -58,7 +58,7 @@
                 <div>
                     总价：<span>¥{{ getTotalPrice | keepTwoDecimalPlaces }}</span>
                 </div>
-                <span class='go-pay'>去结算</span>
+                <span class='go-pay' @click="handleGoPay">去结算</span>
             </el-col>
         </el-row>
     </div>
@@ -84,6 +84,24 @@ export default {
         this.getSelectCartData();
     },
     methods: {
+        // 结算
+        handleGoPay() {
+            let selection = this.selection;
+            if( selection.length ) {
+                this.$router.push({ 
+                    name: 'settlementPage', 
+                    query: { 
+                        id: selection.map(item => item.pid) || [],
+                        type: 'cart'
+                    } 
+                });
+            }else{
+                this.$message({
+                    message: '请选择需要结算的商品！',
+                    type: 'warning'
+                });
+            }
+        },
         // 批量 删除/加入收藏
         batchClick(_this) {
             let selection = this.selection;

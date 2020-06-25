@@ -17,7 +17,6 @@
                 <router-link to='/myOrder'>我的订单</router-link>
                 <router-link to='/myCollection'>商品收藏</router-link>
                 <a>用户中心</a>
-                <a>商城后台</a>
             </el-col>
       </el-row>
   </div>

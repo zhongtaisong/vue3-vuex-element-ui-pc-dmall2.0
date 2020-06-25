@@ -63,10 +63,10 @@
                     width="110"
                     align='center'
                 >
-                    <template slot-scope="scope">             
+                    <template>             
                         <div class='operation'>
-                            <span @click="addCollectionClick(scope.row.id)">评价</span>
-                            <span @click="addCollectionClick(scope.row.id)">详情</span>
+                            <span @click="goNextPage('comment', tb.id)">评价</span>
+                            <span @click="goNextPage('detail', tb.id)">详情</span>
                         </div>
                     </template>
                 </el-table-column>
@@ -95,6 +95,18 @@ export default {
         this.getAllOrderData();
     },
     methods: {
+        // 进入 评价/订单详情
+        goNextPage(_this, id) {
+            let obj = {
+                comment: () => {
+                    // this.$router.push({ name: 'orderDetails', query: { id } });
+                },
+                detail: () => {
+                    this.$router.push({ name: 'orderDetails', query: { id } });
+                }
+            };
+            obj[_this]();
+        },
         // 删除 - 操作
         deleteCartClick(id) {
             this.$confirm('确认删除这笔订单?', '提示', {

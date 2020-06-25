@@ -1,0 +1,68 @@
+@import '~@com/index.less';
+
+.dm_settlementPage {
+    height: 100%;
+    background: #fff;
+    margin-bottom: 30px !important;
+    border: solid 1px #e6e6e6;
+    padding: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    .imgs_style {
+        width: 100%;
+    }
+    .title_style {
+        text-align: left;
+        >span {
+            display: block;
+            &:first-child {
+                overflow: hidden;
+            }
+            &:last-child {
+                color: #999;
+            }
+        }
+        &:hover {
+            >span {
+                &:first-child {
+                    color: @main-color;
+                }
+            }
+        }
+    }
+    &__pay {
+        width: 100%;
+        padding: 20px 0;
+        .el-col-24 {
+            padding: 0 10px;
+            >div {
+                padding: 6px 0;
+                display: flex;
+                justify-content: flex-start;
+                line-height: 1.6rem;
+                >i {
+                    font-style: normal;
+                    width: 72px;
+                    padding-right: 6px;
+                }
+                >span, >div {
+                    flex: 1;
+                }
+            }
+        }
+        &--submit {
+            button {
+                width: 100%;
+            }
+        }
+        &--name {
+            align-items: center;
+        }
+        &--price {
+            >span {
+                color: @main-color;
+                font-size: 16px;
+                text-decoration: underline;
+            }
+        }
+    }
+}

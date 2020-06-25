@@ -8,8 +8,10 @@ import * as headerBar from './headerBar';
 import * as shoppingCart from './shoppingCart';
 import * as myCollection from './myCollection';
 import * as myOrder from './myOrder';
+import * as settlementPage from './settlementPage';
+import * as orderDetails from './orderDetails';
 
 export default {
     ...common, ...home, ...products, ...productsDetails, ...login, ...register, ...headerBar, ...shoppingCart, ...myCollection,
-    ...myOrder
+    ...myOrder, ...settlementPage, ...orderDetails
 }
