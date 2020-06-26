@@ -1,7 +1,7 @@
 <template>
     <div class="common_width dm_myOrder">
         <TableTitle title='我的订单'>
-            <div>（当前共有 <i>{{ 99 }}</i> 笔订单）</div>
+            <div>（当前共有 <i>{{ tableData.length }}</i> 笔订单）</div>
         </TableTitle>
         <el-table
             border
@@ -86,9 +86,7 @@ export default {
                 { id: 4, prop: 'num', label: '数量', width: 150 },
                 { id: 5, prop: 'totalprice', label: '小计', width: 172 }
             ],
-            tableData: [],
-            selection: [],
-            row: {}
+            tableData: []
         }
     },
     mounted() {
@@ -118,29 +116,6 @@ export default {
             }).catch(() => {
                 return;
             })
-        },
-        // 加入购物车 - 操作
-        addCollectionClick(id) {
-            // this.$confirm('此商品确认加入购物车?', '提示', {
-            //     confirmButtonText: '确定',
-            //     cancelButtonText: '取消',
-            //     type: 'warning'
-            // }).then(() => {
-            //     this.postAddCollectionData({
-            //         ids: Array.isArray(id) ? id : [id]
-            //     });
-            // }).catch(() => {
-            //     return;
-            // })
-        },
-        // 全选
-        rowAll(selection) {
-            this.selection = selection;
-        },
-        // 选中行
-        rowSelection(selection, row) {
-            this.selection = selection;
-            this.row = row;
         },
         // 查询我的订单
         async getAllOrderData() {

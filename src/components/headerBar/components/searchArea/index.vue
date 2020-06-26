@@ -5,8 +5,7 @@
             <el-col :span='11'>
                 <router-link to='/' exact-active-class='active'>首 页</router-link>
                 <router-link to='/products' active-class='active'>杂货铺</router-link>
-                <a>网站说明</a>
-                <a>留言</a>
+                <router-link to='/message' active-class='active'>留言</router-link>
             </el-col>
             <el-col :span='9'>
                 <el-input placeholder="搜索商品" v-model="kws" size="small" @keyup.native.enter="getSearchKws">

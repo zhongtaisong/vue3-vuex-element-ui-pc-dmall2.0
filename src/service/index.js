@@ -11,8 +11,9 @@ import * as myOrder from './myOrder';
 import * as settlementPage from './settlementPage';
 import * as orderDetails from './orderDetails';
 import * as myComment from './myComment';
+import * as message from './message';
 
 export default {
     ...common, ...home, ...products, ...productsDetails, ...login, ...register, ...headerBar, ...shoppingCart, ...myCollection,
-    ...myOrder, ...settlementPage, ...orderDetails, ...myComment
+    ...myOrder, ...settlementPage, ...orderDetails, ...myComment, ...message
 }

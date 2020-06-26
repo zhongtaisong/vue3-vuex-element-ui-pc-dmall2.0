@@ -68,7 +68,7 @@ export default {
                 agree: () => {
                     if(this.type != 'agree') {
                         ++likeNum;
-                        dislikeNum && dislikeNum--;
+                        this.type && dislikeNum && dislikeNum--;
                     }else{
                         isStop = true;
                     }
@@ -76,7 +76,7 @@ export default {
                 disagree: () => {
                     if(this.type != 'disagree') {
                         ++dislikeNum;
-                        likeNum && likeNum--;
+                        this.type && likeNum && likeNum--;
                     }else{
                         isStop = true;
                     }          

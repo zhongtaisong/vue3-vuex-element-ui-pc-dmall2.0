@@ -13,6 +13,7 @@ const MyCollection = () => import(/* webpackChunkName: 'myCollection' */ '@pages
 const SettlementPage = () => import(/* webpackChunkName: 'settlementPage' */ '@pages/settlementPage');
 const OrderDetails = () => import(/* webpackChunkName: 'orderDetails' */ '@pages/orderDetails');
 const MyComment = () => import(/* webpackChunkName: 'myComment' */ '@pages/myComment');
+const Message = () => import(/* webpackChunkName: 'message' */ '@pages/message');
 // import Products from '@pages/Products';
 // import ProductsDetail from '@pages/ProductsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
@@ -104,6 +105,12 @@ const routes = [
         name: 'myComment',
         component: MyComment,
         meta: ['我的评价']
+    },
+    {
+        path: '/message',
+        name: 'message',
+        component: Message,
+        meta: ['留言']
     }
 ];
 
