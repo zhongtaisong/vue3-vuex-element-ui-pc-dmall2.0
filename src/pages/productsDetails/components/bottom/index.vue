@@ -15,7 +15,18 @@
                     </el-row>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="商品评价" name="comment">222222222</el-tab-pane>
+            <el-tab-pane label="商品评价" name="comment">
+                <List v-for='c in commentList' :key='c.id'
+                    :id='c.id'
+                    :avatar="c.avatar ? `${$url}${c.avatar}` : ''" 
+                    :uname='c.uname'
+                    :commentTime='c.commentTime'
+                    :content='c.content'
+                    :likeNum='c.agree'
+                    :dislikeNum='c.disagree'
+                    :statusClick='statusClick'
+                />
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -35,21 +46,7 @@ export default {
             default() {
                 return [];
             }
-        },
-        // imgList: {
-        //     type: Array,
-        //     default() {
-        //         return [];
-        //     }
-        // },
-        // specs: {
-        //     type: Array,
-        //     default() {
-        //         return [];
-        //     }
-        // },
-        // getDetailsData: Function,
-        // postAddCartData: Function
+        }
     },
     data() {
         return {
@@ -74,14 +71,48 @@ export default {
                 { id: 17, label: '机身材质', key: 'bodyMaterial', value: '' }
             ],
             BRAND_LIST: this.$tableDic.BRAND_LIST || {},
+            commentList: []
         }
     },
     methods: {
+        // 赞 /踩 - 操作
+        statusClick(id, type, agreeNum, disagreeNum) {
+            this.postUpdateCommentData({
+                id, type, agreeNum, disagreeNum
+            });
+        },
         // 监听tab
         tabsChange(tab={}) {
             this.activeName = tab.name;
+            tab.name == 'comment' && this.getCurrentCommentData({
+                pid: this.params.id
+            });
+        },
+        // 当前商品评价
+        async getCurrentCommentData(params={}) {
+            const res = await this.$service.getCurrentCommentData(params);
+            try {
+                if (res.data.code === 200) {
+                    const { data=[] } = res.data || {};
+                    this.commentList = data;
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        // 赞 / 踩
+        async postUpdateCommentData(params={}) {
+            const res = await this.$service.postUpdateCommentData(params);
+            try {
+                if (res.data.code === 200) {
+                    this.getCurrentCommentData({
+                        pid: this.params.id
+                    });
+                }
+            } catch (err) {
+                console.log(err);
+            }
         }
-
     },
     computed: {
         newParamsList() {

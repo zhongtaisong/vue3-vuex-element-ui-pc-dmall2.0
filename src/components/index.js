@@ -5,6 +5,7 @@ import FooterBar from './footerBar';
 import Carousel from './carousel';
 import Card from './card';
 import TableTitle from './tableTitle';
+import List from './list';
 
 export default (Vue) => {
     Vue.component('HeaderBar', HeaderBar);
@@ -12,4 +13,5 @@ export default (Vue) => {
     Vue.component('Carousel', Carousel);
     Vue.component('Card', Card);
     Vue.component('TableTitle', TableTitle);
+    Vue.component('List', List);
 }

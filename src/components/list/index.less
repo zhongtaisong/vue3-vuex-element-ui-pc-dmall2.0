@@ -1,0 +1,42 @@
+@import '~@com/index.less';
+
+.dm_list {
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    &__left {
+        margin-right: 12px;
+    }
+    &__right {
+        &--top {
+            span {
+                margin-right: 10px;
+            }
+        }
+        &--center {
+            font-size: 14px;
+            padding: 10px 0;
+            color: #000;
+            line-height: 1.5;
+        }
+        &--bottom {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            span {
+                margin-right: 4px;
+                cursor: pointer;
+                &:hover {
+                    color: @main-color;
+                }
+            }
+            &__like {
+                margin-right: 20px;
+            }
+            .active {
+                color: @main-color;
+            }
+        }
+    }
+}

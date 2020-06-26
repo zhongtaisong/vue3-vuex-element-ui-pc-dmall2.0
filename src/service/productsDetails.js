@@ -11,8 +11,8 @@ export const getIntroimgsData = () => {
 }
 
 // 获取 - 当前商品评价 - 数据
-export const getCurrentCommentData = () => {
-    return Http.get('comment/select/pid');
+export const getCurrentCommentData = (data = {}) => {
+    return Http.get('comment/select/pid', data);
 }
 
 // 发送 -  喜欢/不喜欢 - 数据
