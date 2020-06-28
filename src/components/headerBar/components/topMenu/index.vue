@@ -16,7 +16,7 @@
                 </template>
                 <router-link to='/myOrder'>我的订单</router-link>
                 <router-link to='/myCollection'>商品收藏</router-link>
-                <a>用户中心</a>
+                <router-link to='/userCenter'>用户中心</router-link>
             </el-col>
       </el-row>
   </div>

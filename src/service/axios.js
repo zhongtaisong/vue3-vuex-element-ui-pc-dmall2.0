@@ -55,34 +55,30 @@ $axios.interceptors.response.use(
             loadingInstance && loadingInstance.close();
         }
         if (error.response) {
+            console.log('22222222222')
             const { pathname } = window.location || {};
             const { data, status, request: { responseURL } } = error.response || {};
             loadingInstance && loadingInstance.close();
             switch (status) {
                 case 401:
-                    // 返回 401 清除token信息并跳转到404页面
-                    // topMenuState.logoutData();
-                    // if( BLACK_LIST_PATH.includes( pathname ) ){
-                        // window.location.replace('/views/401');
-                    // }
-                    // window.location.replace('/login');
-                    break;
-                case 404:
-                    // message.error(data.msg );
                     Message({
                         type: 'error',
-                        message: data.msg
+                        message: '当前操作没有权限！'
                     });
                     break;
-                // default:                    
-                //     message.error(data.msg );
+                case 404:
+                    Message({
+                        type: 'error',
+                        message: data.msg || '出错啦！'
+                    });
+                    break;
+                default:
+                    Message({
+                        type: 'error',
+                        message: '网络连接失败，请重试！'
+                    });
             }
         }
-
-        Message({
-            type: 'error',
-            message: '网络连接失败，请重试！'
-        });
         loadingInstance && loadingInstance.close();
         return Promise.reject(error);
     }

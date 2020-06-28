@@ -1,0 +1,35 @@
+@import '~@com/index.less';
+
+.dm_userCenter_address {    
+    .operation {
+        >span {
+            cursor: pointer;
+            padding: 0 8px;
+            &:hover {
+                color: #40A9FF;
+            }
+        }
+    }
+    .imgs_style {
+        width: 100%;
+    }
+    .title_style {
+        text-align: left;
+        >span {
+            display: block;
+            &:first-child {
+                overflow: hidden;
+            }
+            &:last-child {
+                color: #999;
+            }
+        }
+        &:hover {
+            >span {
+                &:first-child {
+                    color: @main-color;
+                }
+            }
+        }
+    }
+}

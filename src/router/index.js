@@ -14,6 +14,7 @@ const SettlementPage = () => import(/* webpackChunkName: 'settlementPage' */ '@p
 const OrderDetails = () => import(/* webpackChunkName: 'orderDetails' */ '@pages/orderDetails');
 const MyComment = () => import(/* webpackChunkName: 'myComment' */ '@pages/myComment');
 const Message = () => import(/* webpackChunkName: 'message' */ '@pages/message');
+const UserCenter = () => import(/* webpackChunkName: 'userCenter' */ '@pages/userCenter');
 // import Products from '@pages/Products';
 // import ProductsDetail from '@pages/ProductsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
@@ -111,6 +112,12 @@ const routes = [
         name: 'message',
         component: Message,
         meta: ['留言']
+    },
+    {
+        path: '/userCenter',
+        name: 'userCenter',
+        component: UserCenter,
+        meta: ['用户中心']
     }
 ];
 

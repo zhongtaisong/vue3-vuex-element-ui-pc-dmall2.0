@@ -1,7 +1,7 @@
 <template>
     <div class="dm_list">
         <div class="dm_list__left">
-            <el-avatar size="medium" :src="avatar"></el-avatar>
+            <el-avatar size="medium" :src="avatar">{{ !avatar ? uname : '' }}</el-avatar>
         </div>
         <div class="dm_list__right">
             <div class="dm_list__right--top">
@@ -27,10 +27,7 @@
 export default {
     props: {
         id: Number,
-        avatar: {
-            type: String,
-            default: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-        },
+        avatar: String,
         uname: {
             type: String,
             default: '-'
