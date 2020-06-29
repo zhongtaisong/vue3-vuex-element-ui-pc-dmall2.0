@@ -38,36 +38,7 @@
                         </el-col>
                         <el-col :span='24'>
                             <el-form-item label='上传头像' prop='avatar'>
-                                <el-upload
-                                    class="avatar-uploader"
-                                    action="#"
-                                    :show-file-list="false"
-                                    :before-upload="beforeAvatarUpload"
-                                    :http-request='httpRequest'
-                                >
-                                    <img :src="personInfo.avatar" class="avatar">
-                                    <!-- <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
-                                    <span class="el-upload-list__item-actions">
-                                        <span
-                                            @click="handlePictureCardPreview(file)"
-                                            style='padding: 10px'
-                                        >
-                                            <i class="el-icon-zoom-in"></i>
-                                        </span>
-                                        <span
-                                            @click="handleDownload(file)"
-                                            style='padding: 10px'
-                                        >
-                                            <i class="el-icon-download"></i>
-                                        </span>
-                                        <span
-                                            @click="handleRemove(file)"
-                                            style='padding: 10px'
-                                        >
-                                            <i class="el-icon-delete"></i>
-                                        </span>
-                                    </span>
-                                </el-upload>
+                                <Upload :avatar='personInfo.avatar' :getImageUrl='getImageUrl' />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -105,6 +76,11 @@
                                 <el-input :value="personInfo.birthday || '-'" ></el-input>
                             </el-form-item>
                         </el-col>
+                        <el-col :span='24'>
+                            <el-form-item label='头像：' prop='avatar'>
+                                <el-avatar :size='100' :src="personInfo.avatar"></el-avatar>
+                            </el-form-item>
+                        </el-col>
                     </el-row>
                 </el-form>
             </el-col>
@@ -140,64 +116,25 @@ export default {
                     { type: 'string', required: true, message: '请选择日期', trigger: 'change' }
                 ],
                 avatar: [
-                    { type: 'string', required: true, message: '请上传头像', trigger: 'change' }
+                    { required: true, message: '请上传头像', trigger: 'change' }
                 ]
             },
-            imageUrl: ''
+            imageUrl: null,
+            delList: []
         }
     },
     mounted() {
         this.getUserInfoData();
     },
     methods: {
-        httpRequest(param = {}) {
-            let fileObj = param.file;
-            let _URL = window.URL || window.webkitURL;
-            this.personInfo['avatar'] = _URL.createObjectURL && _URL.createObjectURL(fileObj);
-            // let fd = new FormData()// FormData 对象
-            // fd.append('file', fileObj)// 文件对象
-            // fd.append('platNum', this.importList.platNum)
-            // fd.append('taskName', this.importList.taskName)
-            
-            // let url = process.env.CMS1_BASE_API + 'cdnDel/uploadExcel'
-            // let config = {
-            //     headers: {
-            //     'Content-Type': 'multipart/form-data'
-            //     }
-            // }
-            // axios.post(url, fd, config).then(res=>{
-            //     if(res.code===0){
-            //         this.submitForm();//提交表单
-            //     }
-            // })
-        },
-        beforeAvatarUpload(file) {
-            // 图片格式
-            const imgFormat = ['image/jpeg', 'image/png'];
-            // const imgFormat = ['image/jpeg'];
-            // const isJPG = file.type === 'image/jpeg';
-            const isJPG = imgFormat.includes(file.type);
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-                this.$message.error('上传头像图片仅限是 JPG、PNG 格式!');
+        // 获取上传的图片
+        getImageUrl(url, file={}) {
+            let avatar = this.personInfo['avatar'];
+            if( avatar != url && !this.delList.length ) {
+                this.delList = avatar && avatar.includes('api/') ? [ avatar.slice(avatar.indexOf('api/') + 4) ] : [];
             }
-            if (!isLt2M) {
-                this.$message.error('上传头像图片大小不能超过 2MB!');
-            }
-            return isJPG && isLt2M;
-        },
-        handleRemove(file) {
-            console.log('1111111111', file);
-        },
-        handlePictureCardPreview(file) {
-            console.log('222222222222', file);
-            // this.dialogImageUrl = file.url;
-            // this.dialogVisible = true;
-        },
-        handleDownload(file) {
-            console.log('3333333333333', file);
-            console.log(file);
+            this.personInfo['avatar'] = url;
+            this.imageUrl = file;
         },
         // 重置
         resetForm() {
@@ -205,20 +142,27 @@ export default {
         },
         // 个人资料 - 表单校验
         submitForm(refName) {
-            let formData = new FormData();
             this.$refs[refName].validate((valid) => {
                 if(valid) {
-                    console.log('11111111111', this.personInfo)
+                    let formData = new FormData();
+                    let personInfo = this.personInfo;
+                    let delList = this.delList;
+                    let imageUrl = this.imageUrl;
+
+                    delete personInfo.avatar;
                     // 表单
-                    // formData.append('userInfo', JSON.stringify(this.personInfo));
+                    formData.append('userInfo', JSON.stringify(this.personInfo));
                     // // 存储被删图片
-                    // formData.append('delList', JSON.stringify(delList));
-                    // formData.append('uname', sessionStorage.getItem('uname'));
-                    // this.postRegData({
-                    //     ...this.personInfo, 
-                    //     upwd: this.$md5( upwd + this.$pwd_key ), 
-                    //     confirm: this.$md5( confirm + this.$pwd_key )
-                    // });
+                    formData.append('delList', JSON.stringify(delList));
+                    formData.append('uname', sessionStorage.getItem('uname'));
+
+                    if(typeof imageUrl == 'object' ){
+                        formData.append('avatar', imageUrl);
+                    }else {
+                        let url = imageUrl ? imageUrl.slice(imageUrl.indexOf('api/') + 4) : '';
+                        formData.append('avatar', url);
+                    }
+                    this.postUpdateUserInfoData(formData);
                 } else {
                     return false;
                 }
@@ -240,10 +184,8 @@ export default {
             }
         },
         // 修改 - 个人资料
-        async postUpdateUserInfoData() {
-            const res = await this.$service.postUpdateUserInfoData({
-                uname: sessionStorage.getItem('uname')
-            });
+        async postUpdateUserInfoData(params = {}) {
+            await this.$service.postUpdateUserInfoData(params);
         }
     },
     filters: {
@@ -265,28 +207,4 @@ export default {
 };
 </script>
 
-<style lang="less">
-.avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-</style>
+<style lang="less"></style>

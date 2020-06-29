@@ -7,7 +7,7 @@ export default class Http {
             url, 
             method == 'get' ? {
                 params: {...data}
-            } : {...data} 
+            } : data
         ).then(res => {
             return this.isSuccess(res);
         })
