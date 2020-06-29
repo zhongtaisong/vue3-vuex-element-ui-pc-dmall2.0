@@ -22,6 +22,6 @@ export default {
 
 <style lang="less">
     .dm_home {
-    margin: 0 0 30px;
+        margin: 0 0 30px;
     }
 </style>

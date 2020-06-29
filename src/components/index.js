@@ -1,7 +1,5 @@
 import HeaderBar from './headerBar';
 import FooterBar from './footerBar';
-// // export { default as UploadImg } from './uploadImg';
-// // export { default as OrderDetails } from './orderDetails';
 import Carousel from './carousel';
 import Card from './card';
 import TableTitle from './tableTitle';

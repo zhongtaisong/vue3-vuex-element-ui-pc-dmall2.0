@@ -14,14 +14,12 @@ module.exports = {
     chainWebpack: config => {
         // 文件路径别名
         config.resolve.alias
-            .set('@', resolve('./src'))
             .set('@utils', resolve('./src/utils'))
             .set('@config', resolve('./src/config'))
             .set('@pages', resolve('./src/pages'))
             .set('@router', resolve('./src/router'))
             .set('@com', resolve('./src/components'))
             .set('@img', resolve('./src/img'))
-            .set('@axios', resolve('./src/axios'))
             .set('@store', resolve('./src/store'))
             .set('@service', resolve('./src/service'));
     },

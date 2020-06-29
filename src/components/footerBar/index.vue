@@ -3,7 +3,10 @@
         <el-row class='common_width'>
             <el-col :span='8' v-for='l in list' :key='l.id' >
                 <i>{{ l.title }}</i>
-                <a target='_blank' v-for='item in l.content' :href='item.url' :key='item.cid'>{{ item.name }}</a>
+                <div v-for='item in l.content' :key='item.cid'>
+                    <router-link v-if='l.id == 1' :to='item.url' >{{ item.name }}</router-link>
+                    <a v-else target='_blank' :href='item.url'>{{ item.name }}</a>
+                </div>
             </el-col>
         </el-row>
         <div class='copyright'>                    
@@ -17,10 +20,11 @@ export default {
     data() {
         return {
             list: [
-                { id: 1, title: 'demoMall', 
+                { id: 1, title: 'dMall导航', 
                     content: [
-                        { cid: 1, url: '/views/web', name: '网站说明' },
-                        { cid: 2, url: '/views/message', name: '留言' }
+                        { cid: 1, url: '/', name: '首页' },
+                        { cid: 2, url: '/products', name: '杂货铺' },
+                        { cid: 3, url: '/message', name: '留言' }
                     ]
                 },
                 { id: 2, title: '框架', 
