@@ -9,7 +9,7 @@
             background: `url(${require('@img/register/bg.png')}) no-repeat`,
             backgroundSize: 'cover'
         }">
-            <component :is='componentName' :handleTarget='handleTarget'></component>
+            <component :is='componentName' :handleTarget='handleTarget' :fromPath='fromPath'></component>
         </div>
     </div>
 </template>
@@ -28,7 +28,16 @@ export default {
     },
     data() {
         return {
-            componentName: 'Logins'
+            componentName: 'Logins',
+            fromPath: ''
+        }
+    },
+    mounted() {
+        try {
+            const { from } = this.$route.query || {};
+            this.fromPath = from;
+        } catch (error) {
+            console.log(error);
         }
     },
     methods: {

@@ -43,15 +43,15 @@
                 </div>
                 <div>
                     <i>收货人：</i>
-                    <span>{{ getNewAddressObj[0] || '' }}</span>
+                    <span>{{ getNewAddressObj[0] || '-' }}</span>
                 </div>
                 <div>
                     <i>收货地址：</i>
-                    <span>{{ getNewAddressObj[2] || '' }}</span>
+                    <span>{{ getNewAddressObj[2] || '-' }}</span>
                 </div>
                 <div>
                     <i>联系电话：</i>
-                    <span>{{ getNewAddressObj[1] || '' }}</span>    
+                    <span>{{ getNewAddressObj[1] || '-' }}</span>    
                 </div>
                 <div class="dm_settlementPage__pay--price">
                     <i>总金额：</i>
@@ -127,8 +127,10 @@ export default {
 
                     // 获取 - 默认收货人
                     let data = address.filter(item => item.isDefault == 1 ) || [];
-                    const { name, phone, region, detail } = data[0] || {};
-                    this.checkedName = `${name} / ${phone} / ${region}${detail}`;
+                    if(data.length) {
+                        const { name, phone, region, detail } = data[0] || {};
+                        this.checkedName = `${name} / ${phone} / ${region}${detail}`;
+                    }
 
                     this.reqParams['pid'] = productsInfo.map(item => item.pid);
                     this.reqParams['num'] = productsInfo.reduce((total, item, index, arr) => total + item.num, 0);

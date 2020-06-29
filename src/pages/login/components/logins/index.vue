@@ -44,7 +44,8 @@
 <script>
 export default {
     props: {
-        handleTarget: Function
+        handleTarget: Function,
+        fromPath: String
     },
     data() {
         return {
@@ -90,7 +91,11 @@ export default {
                     sessionStorage.setItem('token', token);
                     localStorage.setItem('uname', uname);
                     setTimeout(() => {
-                        this.$router.push('/');
+                        if( !this.fromPath ) {
+                            this.$router.push('/');
+                        }else{
+                            this.$router.go(-1);
+                        }
                     }, 1000)
                 }
             }catch(err) {

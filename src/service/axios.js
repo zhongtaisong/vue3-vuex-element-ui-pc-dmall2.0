@@ -1,17 +1,34 @@
 import axios from "axios";
 import { Loading, Message } from 'element-ui';
+import router from '@router';
 // 设置
 import { PUBLIC_URL, BLACK_LIST_PATH } from '@config';
+// 路由拦截
+router.beforeEach((to, from, next) => {
+    // const { path } = to || {};
+    // // 用户名
+    // let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname') || '';
+    // // token
+    // let token = sessionStorage.getItem('token') || '';
+    // console.log('666666666666', to, path, uname, token, !uname || !token)
+    // if(!(uname && token)) {
+    //     next({ name: 'login' });
+    // }else {
+    //     if( BLACK_LIST_PATH.includes(path) ) {
+    //         next({ name: 'login' });
+    //     }else if(!WHITE_LIST_PATH.includes(path)) {
 
+    //     }
+    //     next()
+    // }
+    next()
+})
+
+// http拦截
 const $axios = axios.create({
     baseURL: PUBLIC_URL,
     timeout: 60 * 1000,
-    withCredentials: true,
-    headers: { 
-        type: 'vue',
-        uname: sessionStorage.getItem('uname') || localStorage.getItem('uname') || '',
-        token: sessionStorage.getItem('token') || ''
-    }
+    withCredentials: true
 });
 
 // loading实例
@@ -25,6 +42,22 @@ $axios.interceptors.request.use(
             background: 'rgba(0, 0, 0, 0.8)',
             text: '加载中'
         });
+
+        // 用户名
+        let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname');
+        // token
+        let token = sessionStorage.getItem('token');
+        const headers = {
+            type: 'vue'
+        };
+        if(uname) {
+            headers['uname'] = uname;
+        }
+        if(token) {
+            headers['token'] = token;
+        }
+        config.headers = headers;
+
         return config;
     }, 
     error => {
@@ -46,25 +79,32 @@ $axios.interceptors.response.use(
         return response;
     }, 
     error => {
-        const { config: { url }, code, request, response } = error || {};
+        const { config: { url }, code } = error || {};
         if( code == 'ECONNABORTED' ){
             Message({
                 type: 'error',
-                message: `${ url } 请求超时！`
+                message: `${ url } 加载超时！`
             });
             loadingInstance && loadingInstance.close();
         }
         if (error.response) {
-            console.log('22222222222')
-            const { pathname } = window.location || {};
             const { data, status, request: { responseURL } } = error.response || {};
             loadingInstance && loadingInstance.close();
             switch (status) {
+                case 400:
+                    Message({
+                        type: 'error',
+                        message: data.msg
+                    });
+                    break;
                 case 401:
                     Message({
                         type: 'error',
-                        message: '当前操作没有权限！'
+                        message: '很抱歉，尚未登录，无权操作！'
                     });
+                    router.push({ name: 'login', query: {
+                        from: router.currentRoute.path
+                    } })
                     break;
                 case 404:
                     Message({

@@ -29,9 +29,9 @@ const mutations = {
     },
     // 查询 - 购物车商品数量
     async getCartNumData(state) {
-        const res = await service.getCartNumData({
-            uname: sessionStorage.getItem('uname') || localStorage.getItem('uname')
-        });
+        let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname');
+        if(!uname) return;
+        const res = await service.getCartNumData({ uname });
         try {
             if (res.data.code === 200) {
                 state.cartNum = res.data.data || 0;
