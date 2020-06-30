@@ -90,6 +90,7 @@ export default {
                     sessionStorage.setItem('uname', uname);
                     sessionStorage.setItem('token', token);
                     localStorage.setItem('uname', uname);
+
                     setTimeout(() => {
                         if( !this.fromPath ) {
                             this.$router.push('/');

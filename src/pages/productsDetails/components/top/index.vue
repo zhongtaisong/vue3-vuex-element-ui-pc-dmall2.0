@@ -82,17 +82,16 @@ export default {
     },
     methods: {
         // 立即购买
-        immediatePurchase() {
-            // let { basicInfo={} } = this.props;
-            // const { id } = basicInfo;
-            // id && this.props.history.push({
-            //     pathname: '/views/products/cart/settlement',
-            //     state: {
-            //         id: [id],
-            //         num: this.state.num,
-            //         type: 'detail'
-            //     }
-            // });
+        async immediatePurchase() {
+            const { id } = this.basicInfo;
+            await this.handleAddCart();
+            await this.$router.push({ 
+                name: 'settlementPage', 
+                query: { 
+                    id: [id],
+                    type: 'cart'
+                } 
+            });
         },
         // 加入购物车
         handleAddCart() {

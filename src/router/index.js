@@ -16,100 +16,141 @@ const MyComment = () => import(/* webpackChunkName: 'myComment' */ '@pages/myCom
 const Message = () => import(/* webpackChunkName: 'message' */ '@pages/message');
 const UserCenter = () => import(/* webpackChunkName: 'userCenter' */ '@pages/userCenter');
 const NotFound = () => import(/* webpackChunkName: 'notFound' */ '@pages/notFound');
+
 Vue.use(Router);
 
+// requiresAuth 登录后才能访问
 const routes = [
     {
         path: '/',
         name: 'home',
         component: Home,
-        meta: ['首页']
+        meta: {
+            title: '首页'
+        }
     },
     {
         path: '/products',
         name: 'products',
         component: Products,
-        meta: ['杂货铺']
+        meta: {
+            title: '杂货铺'
+        }
     },
     {
         path: '/products/detail/:id',
         name: 'productsDetails',
         component: ProductsDetails,
-        meta: ['商品详情']
+        meta: {
+            title: '商品详情'
+        }
     },
     {
         path: '/login',
         name: 'login',
         component: Login,
-        meta: ['登录']
+        meta: {
+            title: '登录'
+        }
     },
     {
         path: '/register',
         name: 'register',
         component: Register,
-        meta: ['注册']
+        meta: {
+            title: '注册'
+        }
     },
     {
         path: '/shoppingCart',
         name: 'shoppingCart',
         component: ShoppingCart,
-        meta: ['购物车']
+        meta: {
+            title: '我的购物车',
+            requiresAuth: true
+        }
     },
     {
         path: '/searchResults',
         name: 'searchResults',
         component: SearchResults,
-        meta: ['搜索结果']
+        meta: {
+            title: '搜索结果'
+        }
     },
     {
         path: '/myOrder',
         name: 'myOrder',
         component: MyOrder,
-        meta: ['我的订单']
+        meta: {
+            title: '我的订单',
+            requiresAuth: true
+        }
     },
     {
         path: '/myCollection',
         name: 'myCollection',
         component: MyCollection,
-        meta: ['我的收藏']
+        meta: {
+            title: '我的收藏',
+            requiresAuth: true
+        }
     },
     {
         path: '/settlementPage',
         name: 'settlementPage',
         component: SettlementPage,
-        meta: [{
+        meta: {
+            title: '结算页',
             requiresAuth: true
-        }, '结算页']
+        }
     },
     {
         path: '/orderDetails',
         name: 'orderDetails',
         component: OrderDetails,
-        meta: ['订单详情']
+        meta: {
+            title: '订单详情',
+            requiresAuth: true
+        }
     },
     {
         path: '/myComment',
         name: 'myComment',
         component: MyComment,
-        meta: ['我的评价']
+        meta: {
+            title: '我的评价',
+            requiresAuth: true
+        }
     },
     {
         path: '/message',
         name: 'message',
         component: Message,
-        meta: ['留言']
+        meta: {
+            title: '留言'
+        }
     },
     {
         path: '/userCenter',
         name: 'userCenter',
         component: UserCenter,
-        meta: ['用户中心']
+        meta: {
+            title: '用户中心',
+            requiresAuth: true
+        }
     },
     {
         path: '/notFound',
         name: 'notFound',
         component: NotFound,
-        meta: ['400', '401']
+        meta: {
+            title: 'notFound'
+        }
+    },
+    {
+        path: '*',
+        redirect: '/notFound'     
     }
 ];
 

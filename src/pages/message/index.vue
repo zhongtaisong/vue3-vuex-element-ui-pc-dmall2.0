@@ -16,8 +16,9 @@
                 </el-form-item>
             </el-form>
         </div>
-        <div class="dm_message__btn">            
-            <el-button type="primary" @click="submitForm('ruleForm')">发表留言</el-button>
+        <div class="dm_message__btn">
+            <span :style="{color: 'red', 'padding-right': '20px'}">尚未登录，无法进行发表留言、赞、踩操作！</span>
+            <el-button type="primary" :disabled='isDisabled' @click="submitForm('ruleForm')">发表留言</el-button>
         </div>
         <div class="dm_message__list">            
             <List v-for='c in messageList' :key='c.id'
@@ -47,21 +48,28 @@ export default {
                 content: [
                     { required: true, message: '请输入留言内容', trigger: 'blur' }
                 ]
-            }
+            },
+            isDisabled: false
         }
     },
     mounted() {
         this.getAllMessageData();
+        if( !sessionStorage.getItem('uname') || !sessionStorage.getItem('token') ) {
+            this.isDisabled = true;
+        }
     },
     methods: {
         // 赞 /踩 - 操作
         statusClick(id, type, agreeNum, disagreeNum) {
+            if(this.isDisabled) return;
             this.postUpdateMessageData({
                 id, type, agreeNum, disagreeNum
             });
         },
         // 发表留言 - 表单校验
         submitForm(refName) {
+            if(this.isDisabled) return;
+
             this.$refs[refName].validate((valid) => {
                 if(valid) {
                     this.postAddMessageData({ ...this.ruleForm })
@@ -84,6 +92,7 @@ export default {
         },
         // 赞/踩
         async postUpdateMessageData(params = {}) {
+
             const res = await this.$service.postUpdateMessageData(params);
             try {
                 if (res.data.code === 200) {
@@ -95,6 +104,7 @@ export default {
         },
         // 发表留言
         async postAddMessageData(params = {}) {
+
             const res = await this.$service.postAddMessageData({
                 uname: sessionStorage.getItem('uname'),
                 ...params

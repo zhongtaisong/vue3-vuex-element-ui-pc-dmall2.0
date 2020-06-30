@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data() {
         return {
@@ -40,12 +42,18 @@ export default {
                     sessionStorage.removeItem('token');
                     this.uname = null;
                     this.token = null;
+                    
+                    const { path, meta={} } = this.$route || {};
+                    if(meta.requiresAuth) {
+                        this.$router.push({ name: 'login', query: {
+                            from: path
+                        } })
+                    }
                 }
             }catch(err) {
                 console.log(err);
             }
         }
-
     }
 }
 </script>

@@ -2,26 +2,32 @@ import axios from "axios";
 import { Loading, Message } from 'element-ui';
 import router from '@router';
 // 设置
-import { PUBLIC_URL, BLACK_LIST_PATH } from '@config';
+import { PUBLIC_URL } from '@config';
+
+// 用户名
+let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname') || '';
+// token
+let token = sessionStorage.getItem('token') || '';
+
 // 路由拦截
 router.beforeEach((to, from, next) => {
-    // const { path } = to || {};
-    // // 用户名
-    // let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname') || '';
-    // // token
-    // let token = sessionStorage.getItem('token') || '';
-    // console.log('666666666666', to, path, uname, token, !uname || !token)
-    // if(!(uname && token)) {
-    //     next({ name: 'login' });
-    // }else {
-    //     if( BLACK_LIST_PATH.includes(path) ) {
-    //         next({ name: 'login' });
-    //     }else if(!WHITE_LIST_PATH.includes(path)) {
 
-    //     }
-    //     next()
-    // }
-    next()
+    const { meta } = to || {};
+    const { title, requiresAuth } = meta || {};
+
+    // 动态设置标签页标题
+    document.title = title || 'vue';
+
+    if(!(uname && token)) {
+        if(requiresAuth) {
+            Message({
+                type: 'error',
+                message: '很抱歉，尚未登录，无法访问！0001'
+            });
+            next({ name: 'login' });
+        }
+    }
+    next();;
 })
 
 // http拦截
@@ -100,7 +106,7 @@ $axios.interceptors.response.use(
                 case 401:
                     Message({
                         type: 'error',
-                        message: '很抱歉，尚未登录，无权操作！'
+                        message: '很抱歉，尚未登录，无法访问！0002'
                     });
                     router.push({ name: 'login', query: {
                         from: router.currentRoute.path
