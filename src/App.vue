@@ -18,12 +18,18 @@ export default {
         }
     },
     mounted() {
-        this.getDicData();
-        this.$store.dispatch('getCartNumData');
-        this.$store.dispatch('getUname', sessionStorage.getItem('uname'));
-        this.$store.dispatch('getToken', sessionStorage.getItem('token'));
+        this.init();
+    },
+    updated() {
+        this.init();
     },
     methods: {
+        init() {
+            this.getDicData();
+            this.$store.dispatch('getCartNumData');
+            this.$store.dispatch('getUname', sessionStorage.getItem('uname'));
+            this.$store.dispatch('getToken', sessionStorage.getItem('token'));
+        },
         // 获取字典表
         async getDicData() {
             const res = await this.$service.getDicData();
