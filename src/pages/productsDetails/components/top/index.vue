@@ -1,5 +1,6 @@
 <template>
     <div class="dm_productsDetails_top">
+        <div style='display: none'>{{ token }}</div>
         <el-row>
             <el-col :span='8'>
                 <dl>
@@ -41,8 +42,8 @@
                 <el-row class='handleButton'>
                     <el-col :span='2' :style='{ height: "1px" }'></el-col>
                     <el-col :span='22'>
-                        <el-button type="primary" plain @click="immediatePurchase">立即购买</el-button>
-                        <el-button type="primary" @click="handleAddCart">加入购物车</el-button>
+                        <el-button type="primary" :disabled='isDisabled' plain @click="immediatePurchase">立即购买</el-button>
+                        <el-button type="primary" :disabled='isDisabled' @click="handleAddCart">加入购物车</el-button>
                     </el-col>
                 </el-row>
             </el-col>
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
     props: {
@@ -78,24 +80,38 @@ export default {
         return {
             actionIndex: 0,
             num: 1,
+            isDisabled: false
+        }
+    },
+    updated() {
+        if( !this.uname || !this.token ) {
+            this.isDisabled = true;
         }
     },
     methods: {
         // 立即购买
         async immediatePurchase() {
             const { id } = this.basicInfo;
+            
+            if(this.isDisabled) return;
+
             await this.handleAddCart();
-            await this.$router.push({ 
-                name: 'settlementPage', 
-                query: { 
-                    id: [id],
-                    type: 'cart'
-                } 
-            });
+            await setTimeout(() => {
+                this.$router.push({ 
+                    name: 'settlementPage', 
+                    query: { 
+                        id: [id],
+                        type: 'cart'
+                    } 
+                })
+            }, 1000);
         },
         // 加入购物车
         handleAddCart() {
             const { id, price } = this.basicInfo;
+
+            if(this.isDisabled) return;
+
             this.$store.dispatch('handleAddCart', {
                 list: [{
                     pid: id,
@@ -122,6 +138,12 @@ export default {
             }
         }
 
+    },
+    computed: {
+        ...mapState({
+            uname: state => state.uname,
+            token: state => state.token
+        })
     }
 }
 </script>

@@ -9,7 +9,7 @@
                 <i>{{ commentTime }}</i>
             </div>
             <div class="dm_list__right--center">{{ content }}</div>
-            <div class="dm_list__right--bottom">
+            <div class="dm_list__right--bottom" v-if='isShowBtn'>
                 <div class="dm_list__right--bottom__like"  :class="type == 'agree' ? 'active' : '' ">
                     <span @click="handleStatusClick(id, 'agree')">赞</span>
                     <i>{{ likeNum }}</i>
@@ -48,7 +48,11 @@ export default {
             type: Number,
             default: 0
         },
-        statusClick: Function
+        statusClick: Function,
+        isShowBtn: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {

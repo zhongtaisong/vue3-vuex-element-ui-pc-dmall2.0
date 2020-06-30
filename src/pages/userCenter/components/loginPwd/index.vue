@@ -118,6 +118,7 @@ export default {
             try{
                 if( res.data.code === 200 ){
                     this.resetForm('loginPwd');
+                    this.$store.dispatch('postLogoutData');
                 }
             }catch(err) {
                 console.log(err);

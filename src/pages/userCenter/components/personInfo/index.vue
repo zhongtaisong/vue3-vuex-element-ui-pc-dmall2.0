@@ -38,7 +38,7 @@
                         </el-col>
                         <el-col :span='24'>
                             <el-form-item label='上传头像' prop='avatar'>
-                                <Upload :avatar='personInfo.avatar' :getImageUrl='getImageUrl' />
+                                <Upload :avatar='personInfo.avatar' :getImageUrl='getImageUrl' :uname='uname' />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -78,7 +78,7 @@
                         </el-col>
                         <el-col :span='24'>
                             <el-form-item label='头像：' prop='avatar'>
-                                <el-avatar :size='100' :src="personInfo.avatar"></el-avatar>
+                                <el-avatar :size='100' :src="personInfo.avatar">{{ !personInfo.avatar ? uname : '' }}</el-avatar>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -89,6 +89,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data() {
         return {
@@ -154,7 +156,7 @@ export default {
                     formData.append('userInfo', JSON.stringify(this.personInfo));
                     // // 存储被删图片
                     formData.append('delList', JSON.stringify(delList));
-                    formData.append('uname', sessionStorage.getItem('uname'));
+                    formData.append('uname', this.uname);
 
                     if(typeof imageUrl == 'object' ){
                         formData.append('avatar', imageUrl);
@@ -171,7 +173,7 @@ export default {
         // 查询 - 个人资料
         async getUserInfoData() {
             const res = await this.$service.getUserInfoData({
-                uname: sessionStorage.getItem('uname')
+                uname: this.uname
             });
             try{
                 if( res.data.code === 200 ){
@@ -203,6 +205,12 @@ export default {
             };
             return (val && obj[val]()) || '-';
         }
+    },
+    computed: {
+        ...mapState({
+            uname: state => state.uname,
+            token: state => state.token
+        })
     }
 };
 </script>

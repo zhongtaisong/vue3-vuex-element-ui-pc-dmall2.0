@@ -90,6 +90,8 @@ export default {
                     sessionStorage.setItem('uname', uname);
                     sessionStorage.setItem('token', token);
                     localStorage.setItem('uname', uname);
+                    this.$store.dispatch('getUname', uname);
+                    this.$store.dispatch('getToken', token);
 
                     setTimeout(() => {
                         if( !this.fromPath ) {

@@ -4,12 +4,16 @@ import Vuex from 'vuex';
 import service from '@service';
 // 登录
 import login from './modules/login.js';
+// 路由
+import router from '@router';
 
 Vue.use(Vuex);
 
 const state = {
     cartNum: 0,
-    searchResult: []
+    searchResult: [],
+    uname: null,
+    token: null
 };
 
 const mutations = {
@@ -43,6 +47,37 @@ const mutations = {
     // 获取搜索结果
     getSearchResult(state, value=[]) {
         state.searchResult = value;
+    },
+    // 获取uname
+    getUname(state, value) {
+        state.uname = value;
+    },
+    // 获取token
+    getToken(state, value) {
+        state.token = value;
+    },    
+    // 退出登录
+    async postLogoutData(state) {
+        const res = await service.postLogoutData();
+        try{
+            if( res.data.code === 200 ){
+                sessionStorage.removeItem('uname');
+                sessionStorage.removeItem('token');
+                state.uname = null;
+                state.token = null;
+                
+                const { path, meta={} } = router.currentRoute || {};
+                if(meta.requiresAuth) {
+                    setTimeout(() => {
+                        router.push({ name: 'login', query: {
+                            from: path
+                        } })
+                    }, 1000)
+                }
+            }
+        }catch(err) {
+            console.log(err);
+        }
     }
 };
 
@@ -55,6 +90,15 @@ const actions = {
     },
     getSearchResult(context, value) {
         context.commit('getSearchResult', value);
+    },
+    getUname(context, value) {
+        context.commit('getUname', value);
+    },
+    getToken(context, value) {
+        context.commit('getToken', value);
+    },
+    postLogoutData(context) {
+        context.commit('postLogoutData');
     }
 };
 

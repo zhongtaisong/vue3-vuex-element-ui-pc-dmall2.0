@@ -1,7 +1,9 @@
 <template>
     <div id="app">
         <HeaderBar v-if='isShowHeader'></HeaderBar>
-        <router-view></router-view>
+        <div class="app_content">
+            <router-view></router-view>
+        </div>
         <FooterBar v-if='isShowHeader'></FooterBar>
         <el-backtop></el-backtop>
     </div>
@@ -18,6 +20,8 @@ export default {
     mounted() {
         this.getDicData();
         this.$store.dispatch('getCartNumData');
+        this.$store.dispatch('getUname', sessionStorage.getItem('uname'));
+        this.$store.dispatch('getToken', sessionStorage.getItem('token'));
     },
     methods: {
         // 获取字典表
@@ -63,4 +67,9 @@ export default {
 
 <style lang='less'>
     @import "./index.less";
+    #app {
+        .app_content {
+            min-height: 100vh;
+        }
+    }
 </style>

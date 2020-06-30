@@ -6,7 +6,7 @@
         :http-request='httpRequest'
         :with-credentials="true"
     >
-        <el-avatar :size='100' :src="avatar" title='点击上传头像'></el-avatar>
+        <el-avatar :size='100' :src="avatar" title='点击上传头像'>{{ !avatar ? uname : '' }}</el-avatar>
     </el-upload>
 </template>
 
@@ -14,7 +14,8 @@
 export default {
     props: {
         avatar: String,
-        getImageUrl: Function
+        getImageUrl: Function,
+        uname: String
     },
     data() {
         return {}

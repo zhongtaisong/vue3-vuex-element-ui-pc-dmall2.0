@@ -19,7 +19,7 @@
             <el-table-column
                 prop="operation"
                 label="操作"
-                width="110"
+                width="140"
                 align='center'
             >
             </el-table-column>
@@ -60,13 +60,13 @@
                 <el-table-column
                     prop="operation"
                     label="操作"
-                    width="110"
+                    width="140"
                     align='center'
                 >
                     <template>             
                         <div class='operation'>
                             <span @click="goNextPage('comment', tb.id, index)">评价</span>
-                            <span @click="goNextPage('detail', tb.id)">详情</span>
+                            <span @click="goNextPage('detail', tb.id)">订单详情</span>
                         </div>
                     </template>
                 </el-table-column>
@@ -82,8 +82,8 @@ export default {
             columns: [
                 { id: 1, prop: 'mainPicture', label: '主图', width: 107 },
                 { id: 2, prop: 'description', label: '商品详情' },
-                { id: 3, prop: 'price', label: '单价', width: 172 },
-                { id: 4, prop: 'num', label: '数量', width: 150 },
+                { id: 3, prop: 'price', label: '单价', width: 162 },
+                { id: 4, prop: 'num', label: '数量', width: 130 },
                 { id: 5, prop: 'totalprice', label: '小计', width: 172 }
             ],
             tableData: []

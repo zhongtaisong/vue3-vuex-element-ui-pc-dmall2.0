@@ -4,21 +4,19 @@ import router from '@router';
 // 设置
 import { PUBLIC_URL } from '@config';
 
-// 用户名
-let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname') || '';
-// token
-let token = sessionStorage.getItem('token') || '';
-
 // 路由拦截
 router.beforeEach((to, from, next) => {
 
     const { meta } = to || {};
     const { title, requiresAuth } = meta || {};
+    // 用户名
+    let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname');
+    // // token
+    let token = sessionStorage.getItem('token');
 
     // 动态设置标签页标题
     document.title = title || 'vue';
-
-    if(!(uname && token)) {
+    if(!uname || !token) {
         if(requiresAuth) {
             Message({
                 type: 'error',
@@ -27,7 +25,7 @@ router.beforeEach((to, from, next) => {
             next({ name: 'login' });
         }
     }
-    next();;
+    next();
 })
 
 // http拦截
@@ -48,10 +46,9 @@ $axios.interceptors.request.use(
             background: 'rgba(0, 0, 0, 0.8)',
             text: '加载中'
         });
-
         // 用户名
         let uname = sessionStorage.getItem('uname') || localStorage.getItem('uname');
-        // token
+        // // token
         let token = sessionStorage.getItem('token');
         const headers = {
             type: 'vue'

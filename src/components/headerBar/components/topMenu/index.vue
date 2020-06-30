@@ -8,7 +8,7 @@
             <el-col :span='18'>
                 <template v-if='uname && token'>
                     <a>欢迎你，{{ uname }}</a>
-                    <a @click="postLogoutData">退出登录</a>
+                    <a @click="$store.dispatch('postLogoutData')">退出登录</a>
                 </template>
                 <template v-else>
                     <router-link to='/login'>登录</router-link>
@@ -27,33 +27,13 @@ import { mapState } from 'vuex';
 
 export default {
     data() {
-        return {
-            uname: sessionStorage.getItem('uname'),
-            token: sessionStorage.getItem('token')
-        }
+        return {}
     },
-    methods: {
-        // 退出登录
-        async postLogoutData() {
-            const res = await this.$service.postLogoutData();
-            try{
-                if( res.data.code === 200 ){
-                    sessionStorage.removeItem('uname');
-                    sessionStorage.removeItem('token');
-                    this.uname = null;
-                    this.token = null;
-                    
-                    const { path, meta={} } = this.$route || {};
-                    if(meta.requiresAuth) {
-                        this.$router.push({ name: 'login', query: {
-                            from: path
-                        } })
-                    }
-                }
-            }catch(err) {
-                console.log(err);
-            }
-        }
+    computed: {
+        ...mapState({
+            uname: state => state.uname,
+            token: state => state.token
+        })
     }
 }
 </script>

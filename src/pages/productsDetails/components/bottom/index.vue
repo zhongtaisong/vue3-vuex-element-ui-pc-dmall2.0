@@ -1,5 +1,6 @@
 <template>
     <div class="dm_productsDetails_bottom">
+        <div style='display: none'>{{ token }}</div>
         <el-tabs v-model="activeName" @tab-click="tabsChange" :style="{ padding: '0 20px', color: '#666' }">
             <el-tab-pane label="商品介绍" name="introduce">
                 <div>
@@ -16,22 +17,27 @@
                 </div>
             </el-tab-pane>
             <el-tab-pane label="商品评价" name="comment">
-                <List v-for='c in commentList' :key='c.id'
-                    :id='c.id'
-                    :avatar="c.avatar ? `${$url}${c.avatar}` : ''" 
-                    :uname='c.uname'
-                    :commentTime='c.commentTime'
-                    :content='c.content'
-                    :likeNum='c.agree'
-                    :dislikeNum='c.disagree'
-                    :statusClick='statusClick'
-                />
+                <template v-if='commentList.length'>
+                    <List v-for='c in commentList' :key='c.id'
+                        :id='c.id'
+                        :avatar="c.avatar ? `${$url}${c.avatar}` : ''" 
+                        :uname='c.uname'
+                        :commentTime='c.commentTime'
+                        :content='c.content'
+                        :likeNum='c.agree'
+                        :dislikeNum='c.disagree'
+                        :statusClick='statusClick'
+                        :isShowBtn='!isDisabled'
+                    />
+                </template>
+                <div v-else :style="{ textAlign: 'center', padding: '30px 0 10px'}">暂无评价</div>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
     props: {
@@ -71,12 +77,19 @@ export default {
                 { id: 17, label: '机身材质', key: 'bodyMaterial', value: '' }
             ],
             BRAND_LIST: this.$tableDic.BRAND_LIST || {},
-            commentList: []
+            commentList: [],
+            isDisabled: false
+        }
+    },
+    updated() {
+        if( !this.uname || !this.token ) {
+            this.isDisabled = true;
         }
     },
     methods: {
         // 赞 /踩 - 操作
         statusClick(id, type, agreeNum, disagreeNum) {
+            if(this.isDisabled) return;
             this.postUpdateCommentData({
                 id, type, agreeNum, disagreeNum
             });
@@ -126,7 +139,11 @@ export default {
                 });
             }
             return paramsList;
-        }
+        },
+        ...mapState({
+            uname: state => state.uname,
+            token: state => state.token
+        })
     }
 }
 </script>

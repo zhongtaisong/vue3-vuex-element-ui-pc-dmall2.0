@@ -1,5 +1,6 @@
 <template>
     <div class="common_width dm_message">
+        <div style='display: none'>{{ token }}</div>
         <div class="dm_message__textarea">
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
                 <el-form-item prop='content'>
@@ -17,25 +18,30 @@
             </el-form>
         </div>
         <div class="dm_message__btn">
-            <span :style="{color: 'red', 'padding-right': '20px'}">尚未登录，无法进行发表留言、赞、踩操作！</span>
+            <span v-if='isDisabled' :style="{color: 'red', 'padding-right': '20px'}">尚未登录，无法进行发表留言操作！</span>
             <el-button type="primary" :disabled='isDisabled' @click="submitForm('ruleForm')">发表留言</el-button>
         </div>
-        <div class="dm_message__list">            
-            <List v-for='c in messageList' :key='c.id'
-                :id='c.id'
-                :avatar="c.avatar ? `${$url}${c.avatar}` : ''" 
-                :uname='c.uname'
-                :commentTime='c.submitTime'
-                :content='c.content'
-                :likeNum='c.agree'
-                :dislikeNum='c.disagree'
-                :statusClick='statusClick'
-            />
+        <div class="dm_message__list">           
+            <template v-if='messageList.length'>
+                <List v-for='c in messageList' :key='c.id'
+                    :id='c.id'
+                    :avatar="c.avatar ? `${$url}${c.avatar}` : ''" 
+                    :uname='c.uname'
+                    :commentTime='c.submitTime'
+                    :content='c.content'
+                    :likeNum='c.agree'
+                    :dislikeNum='c.disagree'
+                    :statusClick='statusClick'
+                    :isShowBtn='!isDisabled'
+                />
+            </template> 
+            <div v-else :style="{ textAlign: 'center', padding: '30px 0 10px'}">暂无留言</div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
     data() {
@@ -54,7 +60,9 @@ export default {
     },
     mounted() {
         this.getAllMessageData();
-        if( !sessionStorage.getItem('uname') || !sessionStorage.getItem('token') ) {
+    },
+    updated() {
+        if( !this.uname || !this.token ) {
             this.isDisabled = true;
         }
     },
@@ -118,6 +126,12 @@ export default {
                 console.log(err);
             }
         }
+    },
+    computed: {
+        ...mapState({
+            uname: state => state.uname,
+            token: state => state.token
+        })
     }
 }
 </script>

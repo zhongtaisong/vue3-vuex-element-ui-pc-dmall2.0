@@ -3,8 +3,8 @@
         <el-row>
             <el-col :span='Math.floor(24 / num)' v-for="s in list" :key='s.id' :style='{ width }'>
                 <el-card shadow="never">
-                    <img :src="s.mainPicture" alt :title="s.productName" :width='imgWidth' @click="$router.push({ name: 'productsDetails', params: { id: s.id } })" />
-                    <div>
+                    <el-image class='dm_card_img' :src="s.mainPicture" :title="s.productName" :width='imgWidth' @click="$router.push({ name: 'productsDetails', params: { id: s.id } })"></el-image>
+                    <div class='dm_card_text'>
                         <p>
                             <span class="unit">￥</span>
                             {{ s.price | keepTwoDecimalPlaces }}

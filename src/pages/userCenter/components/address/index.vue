@@ -190,6 +190,13 @@ export default {
         resetForm(refName) {
             this.$refs[refName].resetFields();
             this.getAllAddressData();
+            this.address = {                
+                name: null,
+                region: null,
+                detail: null,
+                phone: null,
+                isDefault: null
+            };
         },
         // 收货地址 - 表单校验
         submitForm(refName) {
@@ -214,6 +221,7 @@ export default {
                 if( res.data.code === 200 ){
                     const { data=[] } = res.data || {};
                     this.tableData = data;
+                    this.$refs['address'].resetFields();
                 }
             }catch(err) {
                 console.log(err);

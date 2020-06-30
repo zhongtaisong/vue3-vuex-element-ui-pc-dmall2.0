@@ -1,5 +1,6 @@
 <template>
     <div class="dm_products">
+        <div style='display: none'>{{ token }}</div>
         <div class='common_width'>
             <div class='filter_title'>
                 <h1>商品筛选</h1>
@@ -87,7 +88,7 @@
                     <template v-slot='slotProps'>                  
                         <div class="dm_card__btn">
                             <el-input-number controls-position="right" :min='1' :max='99' size='small' v-model="slotProps.num" @change='numberChange($event, slotProps)'></el-input-number>
-                            <el-button type="primary" plain size='small' @click="addCartClick(slotProps)">加入购物车</el-button>
+                            <el-button type="primary" :disabled='isDisabled' plain size='small' @click="addCartClick(slotProps)">加入购物车</el-button>
                         </div>
                     </template>
                 </Card>
@@ -104,6 +105,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data() {
         return {
@@ -113,12 +116,18 @@ export default {
             filterList: [],
             total: 0,
             filterObj: {},
-            visible: {}
+            visible: {},
+            isDisabled: false
         }
     },
     mounted() {
         this.getProductsData();
         this.getFilterData();
+    },
+    updated() {
+        if( !this.uname || !this.token ) {
+            this.isDisabled = true;
+        }
     },
     methods: {
         // 数量 - 操作
@@ -133,6 +142,7 @@ export default {
         // 加入购物车
         addCartClick(props={}) {
             const { id, price, num } = props;
+            if(this.isDisabled) return;
             this.$store.dispatch('handleAddCart', { list: [{
                 pid: id,
                 num,
@@ -207,7 +217,11 @@ export default {
     computed: {
         BRAND_LIST() {
             return this.$tableDic.BRAND_LIST;
-        }
+        },
+        ...mapState({
+            uname: state => state.uname,
+            token: state => state.token
+        })
     }
 }
 </script>
